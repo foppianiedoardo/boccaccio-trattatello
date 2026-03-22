@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<text>
+  <prop id="p1" type="principale">Il cane dorme a lungo</prop>
+  <!-- p2 assente in questa versione -->
+  <prop id="p3" type="avverbiale">dopo la passeggiata</prop>
+</text>
