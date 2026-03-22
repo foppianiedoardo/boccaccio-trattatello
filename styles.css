@@ -1,0 +1,92 @@
+:root{
+  --bg:#f7f7f8;
+  --card:#ffffff;
+  --accent:#2b6cb0;
+  --muted:#666;
+  --gap:12px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+body{
+  font-family:var(--font);
+  margin:0;
+  background:var(--bg);
+  color:#111;
+  line-height:1.5;
+  padding:20px;
+}
+header{margin-bottom:18px}
+h1{margin:0;font-size:1.4rem}
+.subtitle{margin:4px 0 0;color:var(--muted)}
+
+.controls{margin:10px 0}
+button{padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--gap);
+  align-items:start;
+  margin-top:12px;
+}
+
+/* riga che contiene due celle (una per versione) */
+.row{
+  display:contents;
+}
+
+/* cella singola */
+.cell{
+  background:var(--card);
+  padding:12px;
+  border-radius:8px;
+  min-height:56px;
+  box-shadow:0 1px 2px rgba(0,0,0,0.04);
+  position:relative;
+  overflow:visible;
+}
+
+/* stile per il testo della proposizione */
+.prop{
+  display:inline-block;
+  padding:6px 8px;
+  border-radius:6px;
+  background:transparent;
+  cursor:help;
+  border:1px dashed transparent;
+}
+
+/* evidenziazione quando annotazioni visibili */
+.annot-visible .prop{
+  border-color:rgba(43,108,176,0.25);
+  background:rgba(43,108,176,0.03);
+}
+
+/* tooltip semplice */
+.prop[data-type]:hover::after,
+.prop[data-type]:focus::after{
+  content: attr(data-type);
+  position:absolute;
+  left:0;
+  transform:translateY(8px);
+  background:#222;
+  color:#fff;
+  padding:6px 8px;
+  border-radius:6px;
+  white-space:nowrap;
+  z-index:30;
+  top:100%;
+}
+
+/* cella vuota (quando manca la proposizione) */
+.empty{
+  background:transparent;
+  border:2px dashed #eee;
+  min-height:56px;
+}
+
+/* responsive: su mobile colonne impilate */
+@media (max-width:720px){
+  .grid{grid-template-columns:1fr}
+  .header-col h2{text-align:left}
+}
