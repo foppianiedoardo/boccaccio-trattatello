@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <text>
-  <prop id="p1" type="principale">Il cane dorme a lungo</prop>
-  <!-- p2 assente in questa versione -->
-  <prop id="p3" type="avverbiale">dopo la passeggiata</prop>
+  <period id="I_1" type="periodo">
+    <prop id="I_1_p_all" type="full">
+      <seg id="I_1_seg1"> Solone,</seg>
+      <seg id="I_1_seg2"> il cui petto uno umano tempio di divina sapienzia fu reputato,</seg>
+      <seg id="I_1_seg3"> era,</seg>
+      <seg id="I_1_seg4"> secondo che dicono alcuni,</seg>
+      <seg id="I_1_seg5"> spesse volte usato</seg>
+      <seg id="I_1_seg6"> di dire ogni republica,</seg>
+      <seg id="I_1_seg7"> sì come noi,</seg>
+      <seg id="I_1_seg8"> andare</seg>
+      <seg id="I_1_seg9"> e stare sopra due piedi;</seg>
+    </prop>
+
+    <group id="I_1_g_main" type="principale" level="0" mode="e">
+      <member ref="I_1_seg1"/>
+      <member ref="I_1_seg3"/>
+      <member ref="I_1_seg5"/>
+    </group>
+
+    <group id="I_1_g_rel_I" type="subordinata relativa" level="I" mode="i" parent="I_1_g_main">
+      <member ref="I_1_seg2"/>
+    </group>
+
+    <group id="I_1_g_lim_I" type="subordinata limitativa" level="I" mode="i" parent="I_1_g_main">
+      <member ref="I_1_seg4"/>
+    </group>
+
+    <group id="I_1_g_comp_I" type="subordinata completiva oggettiva" level="I" mode="i" parent="I_1_g_main">
+      <member ref="I_1_seg6"/>
+    </group>
+
+    <group id="I_1_g_coord_main" type="coordinata alla principale" level="0" mode="s" parent="I_1_g_main">
+      <member ref="I_1_seg7"/>
+    </group>
+
+    <group id="I_1_g_comp_II" type="subordinata completiva oggettiva" level="II" mode="i" parent="I_1_g_comp_I">
+      <member ref="I_1_seg8"/>
+    </group>
+
+    <group id="I_1_g_comp_I_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="i" parent="I_1_g_comp_I">
+      <member ref="I_1_seg9"/>
+    </group>
+  </period>
 </text>

@@ -5,6 +5,12 @@
   --muted:#666;
   --gap:12px;
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+
+  /* colori highlight per livello di subordinazione */
+  --hl-0: rgba(43,108,176,0.15);
+  --hl-I: rgba(56,161,105,0.18);
+  --hl-II: rgba(221,107,32,0.18);
+  --hl-III: rgba(159,48,165,0.18);
 }
 *{box-sizing:border-box}
 body{
@@ -12,7 +18,7 @@ body{
   margin:0;
   background:var(--bg);
   color:#111;
-  line-height:1.5;
+  line-height:1.6;
   padding:20px;
 }
 header{margin-bottom:18px}
@@ -30,15 +36,10 @@ button{padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#fff;
   margin-top:12px;
 }
 
-/* riga che contiene due celle (una per versione) */
-.row{
-  display:contents;
-}
-
 /* cella singola */
 .cell{
   background:var(--card);
-  padding:12px;
+  padding:12px 16px;
   border-radius:8px;
   min-height:56px;
   box-shadow:0 1px 2px rgba(0,0,0,0.04);
@@ -46,43 +47,64 @@ button{padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#fff;
   overflow:visible;
 }
 
-/* stile per il testo della proposizione */
-.prop{
-  display:inline-block;
-  padding:6px 8px;
-  border-radius:6px;
-  background:transparent;
+/* testo del periodo */
+.period-text{
+  line-height:1.8;
+}
+
+/* segmento inline */
+.seg{
+  display:inline;
+  cursor:default;
+  border-radius:3px;
+  transition:background 0.15s, outline 0.15s;
+}
+
+/* evidenziazione annotazioni (quando attiva) */
+.annot-visible .seg:hover{
   cursor:help;
-  border:1px dashed transparent;
 }
 
-/* evidenziazione quando annotazioni visibili */
-.annot-visible .prop{
-  border-color:rgba(43,108,176,0.25);
-  background:rgba(43,108,176,0.03);
+/* highlight al hover del gruppo — colore per livello */
+.seg.seg-highlighted {
+  outline: 1px solid rgba(0,0,0,0.2);
 }
+.seg.seg-hl-0 { background: var(--hl-0); outline-color: rgba(43,108,176,0.35); }
+.seg.seg-hl-I { background: var(--hl-I); outline-color: rgba(56,161,105,0.4); }
+.seg.seg-hl-II { background: var(--hl-II); outline-color: rgba(221,107,32,0.4); }
+.seg.seg-hl-III { background: var(--hl-III); outline-color: rgba(159,48,165,0.4); }
 
-/* tooltip semplice */
-.prop[data-type]:hover::after,
-.prop[data-type]:focus::after{
-  content: attr(data-type);
+/* tooltip fluttuante */
+.seg-tooltip{
   position:absolute;
-  left:0;
-  transform:translateY(8px);
+  z-index:100;
   background:#222;
   color:#fff;
-  padding:6px 8px;
+  font-size:0.78rem;
+  padding:5px 10px;
   border-radius:6px;
   white-space:nowrap;
-  z-index:30;
-  top:100%;
+  pointer-events:none;
+  box-shadow:0 2px 8px rgba(0,0,0,0.25);
 }
 
-/* cella vuota (quando manca la proposizione) */
+/* cella vuota */
 .empty{
   background:transparent;
   border:2px dashed #eee;
   min-height:56px;
+}
+
+/* header colonne */
+.header-col{
+  background:transparent;
+  box-shadow:none;
+  padding:0 4px;
+}
+.header-col h2{
+  margin:0 0 4px;
+  font-size:1rem;
+  color:var(--muted);
 }
 
 /* responsive: su mobile colonne impilate */
