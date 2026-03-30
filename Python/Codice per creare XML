@@ -1,0 +1,418 @@
+import re
+import sys
+
+
+# ══════════════════════════════════════════════════════════════
+# ABBREVIAZIONI SUBTYPE
+# ══════════════════════════════════════════════════════════════
+
+SUBTYPE_ABBR = {
+    'completiva oggettiva':     'comp',
+    'completiva soggettiva':    'comp_sogg',
+    'relativa':                 'rel',
+    'limitativa':               'lim',
+    'causale':                  'caus',
+    'temporale':                'temp',
+    'finale':                   'fin',
+    'consecutiva':              'cons',
+    'concessiva':               'conc',
+    'condizionale':             'cond',
+    'comparativa':              'compar',
+    'modale':                   'mod',
+    'dichiarativa':             'dich',
+    'interrogativa indiretta':  'int_ind',
+    'avversativa':              'avv',
+}
+
+MODE_MAP = {
+    'e': 'esplicita',
+    'i': 'implicita',
+    's': 'sottintesa',
+}
+
+
+def abbreviate(subtype):
+    if not subtype:
+        return 'sub'
+    key = subtype.lower().strip()
+    return SUBTYPE_ABBR.get(key, key.split()[0][:3])
+
+
+def _to_roman(n):
+    vals = [(10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
+    result = ''
+    for v, r in vals:
+        while n >= v:
+            result += r
+            n -= v
+    return result
+
+
+def _is_roman(s):
+    return bool(re.match(r'^[IVXLC]+$', s)) and s == s.upper()
+
+
+def _is_mode(s):
+    return s.lower() in MODE_MAP and len(s) == 1 and s == s.lower()
+
+
+# ══════════════════════════════════════════════════════════════
+# 1. PARSING INPUT
+# ══════════════════════════════════════════════════════════════
+
+def parse_input(text):
+    text_match = re.search(r'===TEXT===\n(.*?)\n===ANALYSIS===', text, re.DOTALL)
+    analysis_match = re.search(r'===ANALYSIS===(.*?)$', text, re.DOTALL)
+    if not (text_match and analysis_match):
+        raise ValueError("Format non corretto")
+
+    text_lines = text_match.group(1).strip().split('\n')
+    period_id = text_lines[0].strip().replace('.', '_')
+    full_text = '\n'.join(text_lines[1:]).strip()
+    full_text = re.sub(r'^[IVXLC]+\.\s*', '', full_text)
+
+    analysis_lines = [l.strip() for l in analysis_match.group(1).strip().split('\n') if l.strip()]
+    return period_id, full_text, analysis_lines
+
+
+def parse_analysis_line(line):
+    if '=' not in line:
+        raise ValueError(f"Linea invalida: {line}")
+
+    text, rest = line.split('=', 1)
+    text = text.strip()
+    rest = rest.strip()
+
+    parent_match = re.search(r'\[([^\]]+)\]', rest)
+    parent_info = parent_match.group(1).strip() if parent_match else None
+
+    rest_no_brackets = re.sub(r'\[([^\]]+)\]', '', rest)
+    disamb_match = re.search(r'\((\d+)\)', rest_no_brackets)
+    disambiguator = int(disamb_match.group(1)) if disamb_match else None
+
+    rest_clean = re.sub(r'\[([^\]]+)\]', '', rest)
+    rest_clean = re.sub(r'\(\d+\)', '', rest_clean)
+    rest_clean = rest_clean.strip().rstrip(', ')
+
+    parts = [p.strip() for p in rest_clean.split(',') if p.strip()]
+
+    first_part = parts[0].lower() if parts else 'principale'
+    first_words = first_part.split()
+    prop_type = first_words[0]
+    first_part_rest = ' '.join(first_words[1:])
+
+    subtype = None
+    level = None
+    mode = None
+
+    remaining_parts = parts[1:]
+
+    if prop_type == 'principale':
+        level = '0'
+        for p in remaining_parts:
+            ps = p.strip()
+            if _is_mode(ps):
+                mode = MODE_MAP[ps.lower()]
+
+    elif prop_type == 'subordinata':
+        subtype = first_part_rest if first_part_rest else None
+        for p in remaining_parts:
+            ps = p.strip()
+            if _is_mode(ps):
+                mode = MODE_MAP[ps.lower()]
+            elif _is_roman(ps):
+                level = ps
+
+    elif prop_type == 'coordinata':
+        for p in remaining_parts:
+            ps = p.strip()
+            if _is_mode(ps):
+                mode = MODE_MAP[ps.lower()]
+
+    return {
+        'text': text,
+        'type': prop_type,
+        'subtype': subtype,
+        'level': level,
+        'mode': mode,
+        'parent': parent_info,
+        'disambiguator': disambiguator,
+        'segments': []
+    }
+
+
+# ══════════════════════════════════════════════════════════════
+# 2. TROVA PADRE
+# ══════════════════════════════════════════════════════════════
+
+def find_parent_index(parent_desc, entries):
+    if not parent_desc:
+        return None
+
+    tokens = [t.strip() for t in parent_desc.split(',') if t.strip()]
+
+    target_disamb = None
+    target_level = None
+    type_tokens = []
+
+    for t in tokens:
+        d = re.search(r'\((\d+)\)', t)
+        if d:
+            target_disamb = int(d.group(1))
+        clean = re.sub(r'\(\d+\)', '', t).strip()
+        if not clean:
+            continue
+        if _is_mode(clean):
+            continue
+        if _is_roman(clean):
+            target_level = clean
+        else:
+            type_tokens.append(clean.lower())
+
+    wanted = ' '.join(type_tokens).strip()
+    wanted_words = wanted.split()
+    wanted_type = wanted_words[0] if wanted_words else ''
+    wanted_sub = ' '.join(wanted_words[1:]) if len(wanted_words) > 1 else ''
+
+    matches = []
+    for j, e in enumerate(entries):
+        et = e['type'].lower()
+        es = (e['subtype'] or '').lower()
+        el = e['level']
+
+        hit = False
+        if wanted_type == 'principale' and et == 'principale':
+            hit = True
+        elif wanted_type == 'subordinata' and et == 'subordinata':
+            if wanted_sub == es or not wanted_sub:
+                hit = True
+        elif wanted == et or wanted == (et + ' ' + es).strip():
+            hit = True
+
+        if hit:
+            if target_level and el and el != target_level:
+                continue
+            matches.append(j)
+
+    if not matches:
+        return None
+    if target_disamb and target_disamb <= len(matches):
+        return matches[target_disamb - 1]
+    return matches[0]
+
+
+# ══════════════════════════════════════════════════════════════
+# 3. SEGMENTAZIONE
+# ══════════════════════════════════════════════════════════════
+
+def build_segments(full_text, entries):
+    pieces = []
+
+    for ei, entry in enumerate(entries):
+        raw = entry['text'].strip()
+
+        if entry['type'].lower() == 'principale':
+            chunks = [c.strip() for c in raw.split(',') if c.strip()]
+        else:
+            chunks = [raw]
+
+        for chunk in chunks:
+            search = chunk.rstrip('.,;:!?').strip()
+            if not search:
+                continue
+
+            pos = full_text.lower().find(search.lower())
+            if pos == -1:
+                continue
+
+            end = pos + len(search)
+
+            if entry['type'].lower() == 'principale':
+                while end < len(full_text) and full_text[end] in '.,;:!?':
+                    end += 1
+            else:
+                trailing_in_chunk = chunk[len(search):]
+                for ch in trailing_in_chunk:
+                    if end < len(full_text) and full_text[end] == ch:
+                        end += 1
+
+            pieces.append((pos, end, ei))
+
+    pieces.sort(key=lambda x: x[0])
+
+    filtered = []
+    last_end = -1
+    for s, e, ei in pieces:
+        if s >= last_end:
+            filtered.append((s, e, ei))
+            last_end = e
+
+    segments = []
+    for s, e, ei in filtered:
+        seg = full_text[s:e]
+        segments.append(seg)
+        entries[ei]['segments'].append(seg)
+
+    return segments
+
+
+# ══════════════════════════════════════════════════════════════
+# 4. GROUP IDS
+# ══════════════════════════════════════════════════════════════
+
+def build_group_ids(period_id, entries):
+    ids = {}
+
+    for idx, entry in enumerate(entries):
+        t = entry['type'].lower()
+
+        if t == 'principale':
+            gid = f"{period_id}_g_main"
+
+        elif t == 'subordinata':
+            abbr = abbreviate(entry['subtype'])
+            lev = entry['level'] or 'I'
+            gid = f"{period_id}_g_{abbr}_{lev}"
+
+            if gid in ids.values():
+                d = entry.get('disambiguator')
+                if d:
+                    roman = _to_roman(d)
+                    gid = f"{period_id}_g_{abbr}_{roman}"
+                else:
+                    n = 2
+                    while f"{gid}_{n}" in ids.values():
+                        n += 1
+                    gid = f"{gid}_{n}"
+                if gid in ids.values():
+                    n = 2
+                    while f"{gid}_{n}" in ids.values():
+                        n += 1
+                    gid = f"{gid}_{n}"
+
+        elif t == 'coordinata':
+            pi = find_parent_index(entry['parent'], entries)
+            if pi is not None:
+                parent = entries[pi]
+                pt = parent['type'].lower()
+                if pt == 'principale':
+                    gid = f"{period_id}_g_coord_main"
+                elif pt == 'subordinata':
+                    p_abbr = abbreviate(parent['subtype'])
+                    p_lev = parent['level'] or 'I'
+                    gid = f"{period_id}_g_{p_abbr}_{p_lev}_coord"
+                else:
+                    gid = f"{period_id}_g_coord_{idx}"
+            else:
+                gid = f"{period_id}_g_coord_{idx}"
+
+            if gid in ids.values():
+                n = 2
+                while f"{gid}_{n}" in ids.values():
+                    n += 1
+                gid = f"{gid}_{n}"
+
+        else:
+            gid = f"{period_id}_g_{idx}"
+
+        ids[idx] = gid
+
+    return ids
+
+
+# ══════════════════════════════════════════════════════════════
+# 5. ATTRIBUTO TYPE
+# ══════════════════════════════════════════════════════════════
+
+def build_type_attr(entry, entries):
+    t = entry['type'].lower()
+    if t == 'principale':
+        return 'principale'
+    if t == 'subordinata':
+        return ('subordinata ' + (entry['subtype'] or '')).strip()
+    if t == 'coordinata':
+        pi = find_parent_index(entry['parent'], entries)
+        if pi is not None:
+            parent_type = build_type_attr(entries[pi], entries)
+            return f"coordinata alla {parent_type}"
+        return 'coordinata'
+    return t
+
+
+# ══════════════════════════════════════════════════════════════
+# 6. GENERAZIONE XML
+# ══════════════════════════════════════════════════════════════
+
+def generate_xml(period_id, segments, entries):
+    out = []
+    out.append(f'  <period id="{period_id}" type="periodo">')
+    out.append(f'    <prop id="{period_id}_p_all" type="full">')
+
+    for i, seg in enumerate(segments, 1):
+        s = seg if seg.startswith(' ') else ' ' + seg
+        out.append(f'      <seg id="{period_id}_seg{i}">{s}</seg>')
+
+    out.append('    </prop>')
+    out.append('')
+
+    gids = build_group_ids(period_id, entries)
+
+    for idx, entry in enumerate(entries):
+        gid = gids[idx]
+        xtype = build_type_attr(entry, entries)
+
+        level = entry['level']
+        if entry['type'].lower() == 'coordinata':
+            pi = find_parent_index(entry['parent'], entries)
+            level = entries[pi]['level'] if pi is not None else None
+
+        mode = entry.get('mode')
+
+        parent_gid = None
+        if entry['parent']:
+            pi = find_parent_index(entry['parent'], entries)
+            if pi is not None:
+                parent_gid = gids[pi]
+
+        attrs = f'id="{gid}" type="{xtype}"'
+        if level is not None:
+            attrs += f' level="{level}"'
+        if mode:
+            attrs += f' mode="{mode}"'
+        if parent_gid:
+            attrs += f' parent="{parent_gid}"'
+
+        out.append(f'    <group {attrs}>')
+
+        for seg_text in entry['segments']:
+            for si, seg in enumerate(segments):
+                if seg.lower().strip() == seg_text.lower().strip():
+                    out.append(f'      <member ref="{period_id}_seg{si + 1}"/>')
+                    break
+
+        out.append('    </group>')
+        out.append('')
+
+    out.append('  </period>')
+    return '\n'.join(out)
+
+
+# ══════════════════════════════════════════════════════════════
+# MAIN
+# ══════════════════════════════════════════════════════════════
+
+if __name__ == '__main__':
+    filename = sys.argv[1] if len(sys.argv) > 1 else 'input.txt'
+
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            input_text = f.read()
+    except FileNotFoundError:
+        print(f"ERRORE: file '{filename}' non trovato.")
+        print(f"Uso: python generate_xml.py [nome_file]")
+        sys.exit(1)
+
+    period_id, full_text, analysis_lines = parse_input(input_text)
+    entries = [parse_analysis_line(line) for line in analysis_lines]
+    segments = build_segments(full_text, entries)
+    print(generate_xml(period_id, segments, entries))
