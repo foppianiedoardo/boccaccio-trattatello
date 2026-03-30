@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <text>
-  <!-- REDAZIONE II - CAPITOLO I -->
 
 <period id="I_1" type="periodo">
     <prop id="I_1_p_all" type="full">
@@ -48,7 +47,6 @@
     <group id="I_1_g_comp_II_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_II">
       <member ref="I_1_seg10"/>
     </group>
-    <!-- CORREZIONE: de' quali è nesso relativo interno al periodo -->
     <group id="I_1_g_rel_II" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_1_g_main">
       <member ref="I_1_seg11"/>
     </group>
@@ -82,7 +80,6 @@
       <seg id="I_2_seg9"> con l'opere li fini della terra, e con la fama toccaron le stelle.</seg>
     </prop>
 
-    <!-- CORREZIONE: "Dalla quale" è a inizio sezione [2] → legata al periodo precedente ✅ -->
     <group id="I_2_g_caus_I" type="subordinata causale (nesso relativo, legata al periodo precedente)" level="I" mode="implicita" parent="I_2_g_main">
       <member ref="I_2_seg1"/>
     </group>
@@ -95,7 +92,6 @@
       <member ref="I_2_seg5"/>
       <member ref="I_2_seg6"/>
     </group>
-    <!-- CORREZIONE: "Per li quali" è interno al periodo → nesso relativo senza "legata al periodo precedente" -->
     <group id="I_2_g_rel_I" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_2_g_main">
       <member ref="I_2_seg7"/>
       <member ref="I_2_seg9"/>
@@ -117,7 +113,6 @@
     <seg id="I_3_seg8">nascondere l'esilio ingiustamente dato al chiarissimo uomo Dante Alighieri, uomo di sangue nobile, ragguardevole per scienza e per operazioni laudevole e degno di glorioso onore.</seg>
   </prop>
 
-  <!-- "Le vestigie de' quali" è a inizio sezione [3] → legata al periodo precedente ✅ -->
   <group id="I_3_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente)" level="I" mode="esplicita">
     <member ref="I_3_seg1"/>
     <member ref="I_3_seg2"/>
@@ -128,7 +123,6 @@
   <group id="I_3_g_cons" type="subordinata consecutiva" level="II" mode="esplicita" parent="I_3_g_coord_rel">
     <member ref="I_3_seg4"/>
   </group>
-  <!-- CORREZIONE: "Il che" è interno al periodo → nesso relativo senza "legata al periodo precedente" -->
   <group id="I_3_g_rel_II" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_3_g_rel_I">
     <member ref="I_3_seg5"/>
     <member ref="I_3_seg7"/>
@@ -155,7 +149,6 @@
     <seg id="I_4_seg10">e agli onor d'essa mi conosco in solido obligato.</seg>
   </prop>
 
-  <!-- "Intorno alla quale" è a inizio sezione [4] → legata al periodo precedente ✅ -->
   <group id="I_4_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente)" level="I" mode="esplicita">
     <member ref="I_4_seg1"/>
     <member ref="I_4_seg2"/>
@@ -258,7 +251,6 @@
   <group id="I_6_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_6_g_main">
     <member ref="I_6_seg8"/>
   </group>
-  <!-- CORREZIONE: uniti apposizione + raccogliendo come in versione I -->
   <group id="I_6_g_coord_main" type="coordinata alla principale" level="0" mode="implicita" parent="I_6_g_main">
     <member ref="I_6_seg9"/>
   </group>
@@ -279,11 +271,9 @@
     <seg id="I_7_seg8">e regga lo 'ngegno mio.</seg>
   </prop>
 
-  <!-- CORREZIONE: "Il che acciò che compiutamente si possa fare" è unico seg, relativa impropria finale, a inizio sezione [7] → legata al periodo precedente -->
   <group id="I_7_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente, impropria finale)" level="I" mode="esplicita" parent="I_7_g_main">
     <member ref="I_7_seg1"/>
   </group>
-  <!-- CORREZIONE: principale separata -->
   <group id="I_7_g_main" type="principale" level="0" mode="esplicita">
     <member ref="I_7_seg2"/>
   </group>
@@ -291,15 +281,12 @@
     <member ref="I_7_seg3"/>
     <member ref="I_7_seg5"/>
   </group>
-  <!-- CORREZIONE: incidentale modale -->
   <group id="I_7_g_inc" type="subordinata incidentale modale" level="I" mode="esplicita" parent="I_7_g_main">
     <member ref="I_7_seg4"/>
   </group>
-  <!-- CORREZIONE: limitativa -->
   <group id="I_7_g_lim" type="subordinata limitativa" level="II" mode="implicita" parent="I_7_g_rel_II">
     <member ref="I_7_seg6"/>
   </group>
-  <!-- CORREZIONE: completiva oggettiva separata dalla sua coordinata -->
   <group id="I_7_g_obj" type="subordinata completiva oggettiva" level="I" mode="esplicita" parent="I_7_g_main">
     <member ref="I_7_seg7"/>
   </group>
