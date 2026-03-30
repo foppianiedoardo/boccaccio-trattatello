@@ -3,34 +3,105 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boccaccio Trattatello — Confronto versioni</title>
+  <title>Boccaccio. Trattatello in laude di Dante — Confronto redazioni</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <h1>Boccaccio Trattatello — Confronto versioni</h1>
-    <p class="subtitle">Versione 1 (completa) vs Versione 2 (compendiata)</p>
+    <h1>Boccaccio. <em>Trattatello in laude di Dante</em> — Confronto redazioni</h1>
   </header>
 
   <main id="main">
-    <div class="controls">
-      <button id="toggle-anno">Mostra/Nascondi annotazioni</button>
+    <section class="intro">
+      <h2>Introduzione</h2>
+      <p>
+        Il testo qui presentato è tratto da G. Boccaccio, <em>Trattatello in laude di Dante</em>, a cura di M. Fiorilla, in <em>Le vite di Dante tra XIV e XVI secolo</em>, a cura di M. Berté e M. Fiorilla, <em>Iconografia dantesca</em>, a cura di S. Chiodo e I. Valente, Roma, Salerno Editrice, 2017 (<em>NECOD</em>, vol. VII, to. IV), pp. 11-154.
+      </p>
+      <p>
+        Il <em>Trattatello in laude di Dante</em>, composto da Giovanni Boccaccio, costituisce una delle prime biografie di Dante Alighieri. L'opera conobbe tre distinte fasi redazionali: alla stesura principale composta tra il 1351 e il 1355, fecero seguito due compendi, elaborati tra il 1360 e il 1366, di cui il più breve è autografo. La stesura integrale è qui denominata <strong>Redazione&nbsp;I</strong>; il compendio autografo corrisponde alla <strong>Redazione&nbsp;II</strong>.
+      </p>
+      <p>
+        Questo strumento consente di esplorare e confrontare le due redazioni attraverso diverse modalità di analisi:
+      </p>
+      <ul class="intro-features">
+        <li><strong>Confronto testuale</strong> — Le due redazioni sono disposte in colonne parallele, con la possibilità di evidenziare le differenze parola per parola tra i testi per garantirne una visione sinottica. Attivando la funzione, in rosso saranno le parti eliminate dalla Redazione I, in verde quelle eventualmente aggiunte alla Redazione II.</li>
+        <li><strong>Analisi del periodo</strong> — Passando il cursore sulle parole si visualizzano le etichette grammaticali sintattiche (Proposizione principale, subordinata, coordinata) con indicazione del tipo e del grado.</li>
+        <li><strong>Albero sintattico</strong> — Una rappresentazione visuale ad albero della struttura sintattica di ciascun periodo, con nodi collassabili e navigazione interattiva.</li>
+        <li><strong>Statistiche sintattiche</strong> — Un riepilogo comparativo della distribuzione di principali, subordinate e coordinate nelle due redazioni, con dettaglio per grado, tipo e modalità.</li>
+      </ul>
+    </section>
+
+    <div class="controls-center" role="toolbar" aria-label="Controlli">
+      <button id="toggle-diff" aria-pressed="false">⚡ Evidenzia differenze</button>
+      <button id="toggle-tree" aria-pressed="false">🌳 Mostra albero sintattico</button>
     </div>
 
-    <div class="grid" id="grid">
+    <h2 class="text-section-title">Testo · <em>Trattatello in laude di Dante</em></h2>
+
+    <div class="grid-headers" aria-hidden="true">
       <div class="col header-col">
-        <h2>Versione 1</h2>
+        <h2>Redazione I</h2>
+        <div class="index-nav">
+          <label for="period-jump-v1">Vai a:</label>
+          <select id="period-jump-v1">
+            <option value="">— seleziona —</option>
+            <option value="__stats">📊 Statistiche</option>
+          </select>
+        </div>
       </div>
       <div class="col header-col">
-        <h2>Versione 2</h2>
+        <h2>Redazione II</h2>
+        <div class="index-nav">
+          <label for="period-jump-v2">Vai a:</label>
+          <select id="period-jump-v2">
+            <option value="">— seleziona —</option>
+            <option value="__stats">📊 Statistiche</option>
+          </select>
+        </div>
       </div>
-      <!-- Le righe conterranno le celle generate da scripts.js -->
     </div>
+
+    <div class="grid" id="grid" role="table" aria-label="Confronto redazioni">
+    </div>
+
+    <section id="stats-section" class="stats-section">
+      <h2 class="stats-title">Statistiche sintattiche</h2>
+      <p class="stats-subtitle">Analisi comparativa della struttura sintattica tra le due redazioni</p>
+      <div class="stats-container">
+        <div class="stats-card" id="stats-v1">
+          <h3 class="stats-card-title">Redazione I</h3>
+          <div class="stats-body" id="stats-body-v1">
+            <p class="stats-loading">Caricamento…</p>
+          </div>
+        </div>
+        <div class="stats-card" id="stats-v2">
+          <h3 class="stats-card-title">Redazione II</h3>
+          <div class="stats-body" id="stats-body-v2">
+            <p class="stats-loading">Caricamento…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="tree-panel" class="tree-panel" aria-hidden="true">
+      <div class="tree-controls">
+        <label for="tree-period">Periodo:</label>
+        <select id="tree-period"></select>
+        <label for="tree-side">Redazione:</label>
+        <select id="tree-side"><option value="v1">Redazione I</option><option value="v2">Redazione II</option></select>
+        <button id="tree-fullscreen" title="Schermo intero">⛶</button>
+        <button id="tree-close">Chiudi albero</button>
+      </div>
+      <div id="tree-toolbar" class="tree-toolbar">
+        <button id="zoom-in">+</button>
+        <button id="zoom-out">−</button>
+        <button id="reset-view">Reset</button>
+      </div>
+      <div id="tree-canvas" class="tree-canvas" role="img" aria-label="Diagramma ad albero"></div>
+    </div>
+
+    <div id="floating-label" class="floating-label" aria-hidden="true"></div>
   </main>
-
-  <footer>
-    <small>Prototipo — testi di esempio. Quando sei pronto carichiamo i testi reali.</small>
-  </footer>
 
   <script src="scripts.js"></script>
 </body>
