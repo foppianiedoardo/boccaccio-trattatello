@@ -1,0 +1,62 @@
+  <period id="I_1" type="periodo">
+    <prop id="I_1_p_all" type="full">
+      <seg id="I_1_seg1"> Solone,</seg>
+      <seg id="I_1_seg2"> il cui petto uno umano tempio di divina sapienzia fu reputato,</seg>
+      <seg id="I_1_seg3"> e le cui sacratissime leggi sono ancora alli presenti uomini chiara testimonianza della antica giustizia,</seg>
+      <seg id="I_1_seg4"> era,</seg>
+      <seg id="I_1_seg5"> secondo che dicono alcuni,</seg>
+      <seg id="I_1_seg6"> spesse volte usato</seg>
+      <seg id="I_1_seg7"> di dire ogni republica,</seg>
+      <seg id="I_1_seg8"> sì come noi,</seg>
+      <seg id="I_1_seg9"> andare</seg>
+      <seg id="I_1_seg10"> e stare sopra due piedi;</seg>
+      <seg id="I_1_seg11"> de' quali, con matura gravità, affermava</seg>
+      <seg id="I_1_seg12"> essere il destro il non lasciare alcuno difetto commesso impunito</seg>
+    </prop>
+
+    <group id="I_1_g_main" type="principale" level="0" mode="esplicita">
+      <member ref="I_1_seg1"/>
+      <member ref="I_1_seg4"/>
+      <member ref="I_1_seg6"/>
+    </group>
+
+    <group id="I_1_g_comp_I" type="subordinata completiva oggettiva" level="I" mode="implicita" parent="I_1_g_main">
+      <member ref="I_1_seg7"/>
+    </group>
+
+    <group id="I_1_g_rel_I" type="subordinata relativa" level="I" mode="esplicita" parent="I_1_g_main">
+      <member ref="I_1_seg2"/>
+    </group>
+
+    <group id="I_1_g_rel_I_coord" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_1_g_rel_I">
+      <member ref="I_1_seg3"/>
+    </group>
+
+    <group id="I_1_g_lim_I" type="subordinata limitativa" level="I" mode="esplicita" parent="I_1_g_main">
+      <member ref="I_1_seg5"/>
+    </group>
+
+    <group id="I_1_g_coord_main" type="coordinata alla principale" level="0" mode="sottintesa" parent="I_1_g_main">
+      <member ref="I_1_seg8"/>
+    </group>
+
+    <group id="I_1_g_comp_II" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_I">
+      <member ref="I_1_seg9"/>
+    </group>
+
+    <group id="I_1_g_comp_II_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_II">
+      <member ref="I_1_seg10"/>
+    </group>
+
+    <group id="I_1_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_1_g_main">
+      <member ref="I_1_seg11"/>
+    </group>
+
+    <group id="I_1_g_comp_II_2" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_rel_II">
+      <member ref="I_1_seg12"/>
+    </group>
+
+  </period>
+
+
+** Process exited - Return Code: 0 **
