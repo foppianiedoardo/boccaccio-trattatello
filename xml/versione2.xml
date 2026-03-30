@@ -1,6 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
 <text>
-  <prop id="p1" type="principale">Il cane dorme a lungo</prop>
-  <!-- p2 assente in questa versione -->
-  <prop id="p3" type="avverbiale">dopo la passeggiata</prop>
+  <!-- REDAZIONE II - CAPITOLO I -->
+
+<period id="I_1" type="periodo">
+    <prop id="I_1_p_all" type="full">
+      <seg id="I_1_seg1"> Solone,</seg>
+      <seg id="I_1_seg2"> il cui petto uno umano tempio di divina sapienza fu reputato,</seg>
+      <seg id="I_1_seg3"> e le cui sacratissime leggi sono ancora testimonianza dell'antica iustizia e della sua gravità,</seg>
+      <seg id="I_1_seg4"> era,</seg>
+      <seg id="I_1_seg5"> secondo che dicono alcuni,</seg>
+      <seg id="I_1_seg6"> usato talvolta</seg>
+      <seg id="I_1_seg7"> di dire ogni republica,</seg>
+      <seg id="I_1_seg8"> sì come noi,</seg>
+      <seg id="I_1_seg9"> andare</seg>
+      <seg id="I_1_seg10"> e stare sopra due piedi;</seg>
+      <seg id="I_1_seg11"> de' quali con maturità affermava</seg>
+      <seg id="I_1_seg12"> essere il destro il non lasciare alcun difetto commesso impunito,</seg>
+      <seg id="I_1_seg13"> e il sinistro ogni ben fatto remunerare;</seg>
+      <seg id="I_1_seg14"> aggiugnendo che,</seg>
+      <seg id="I_1_seg15"> qualunque delle due cose mancava,</seg>
+      <seg id="I_1_seg16"> senza dubbio da quel piè la republica zoppicare.</seg>
+    </prop>
+
+    <group id="I_1_g_main" type="principale" level="0" mode="esplicita">
+      <member ref="I_1_seg1"/>
+      <member ref="I_1_seg4"/>
+      <member ref="I_1_seg6"/>
+    </group>
+    <group id="I_1_g_rel_I" type="subordinata relativa" level="I" mode="esplicita" parent="I_1_g_main">
+      <member ref="I_1_seg2"/>
+    </group>
+    <group id="I_1_g_rel_I_coord" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_1_g_rel_I">
+      <member ref="I_1_seg3"/>
+    </group>
+    <group id="I_1_g_lim_I" type="subordinata limitativa" level="I" mode="esplicita" parent="I_1_g_main">
+      <member ref="I_1_seg5"/>
+    </group>
+    <group id="I_1_g_comp_I" type="subordinata completiva oggettiva" level="I" mode="implicita" parent="I_1_g_main">
+      <member ref="I_1_seg7"/>
+    </group>
+    <group id="I_1_g_coord_main" type="coordinata alla principale" level="0" mode="sottintesa" parent="I_1_g_main">
+      <member ref="I_1_seg8"/>
+    </group>
+    <group id="I_1_g_comp_II" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_I">
+      <member ref="I_1_seg9"/>
+    </group>
+    <group id="I_1_g_comp_II_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_II">
+      <member ref="I_1_seg10"/>
+    </group>
+    <!-- CORREZIONE: de' quali è nesso relativo interno al periodo -->
+    <group id="I_1_g_rel_II" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_1_g_main">
+      <member ref="I_1_seg11"/>
+    </group>
+    <group id="I_1_g_comp_II_2" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_rel_II">
+      <member ref="I_1_seg12"/>
+    </group>
+    <group id="I_1_g_comp_II_2_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_II_2">
+      <member ref="I_1_seg13"/>
+    </group>
+    <group id="I_1_g_coord_main_1" type="coordinata alla principale" level="0" mode="implicita" parent="I_1_g_main">
+      <member ref="I_1_seg14"/>
+    </group>
+    <group id="I_1_g_cond_I" type="subordinata condizionale" level="I" mode="esplicita" parent="I_1_g_coord_main_1">
+      <member ref="I_1_seg15"/>
+    </group>
+    <group id="I_1_g_comp_obj_I" type="subordinata completiva oggettiva" level="I" mode="implicita" parent="I_1_g_coord_main_1">
+      <member ref="I_1_seg16"/>
+    </group>
+</period>
+
+<period id="I_2" type="periodo">
+    <prop id="I_2_p_all" type="full">
+      <seg id="I_2_seg1"> Dalla quale laudevole sentenza mossi alcuni così egregii come antichi popoli,</seg>
+      <seg id="I_2_seg2"> alcuna volta di deità, altra di marmorea statua, e sovente di celebre sepoltura, di triunfale arco, di laurea corona o d'altra spettabile cosa,</seg>
+      <seg id="I_2_seg3"> secondo i meriti,</seg>
+      <seg id="I_2_seg4"> onoravano i valorosi;</seg>
+      <seg id="I_2_seg5"> per opposito agrissime pene a' colpevoli</seg>
+      <seg id="I_2_seg6"> infligendo.</seg>
+      <seg id="I_2_seg7"> Per li quali meriti la assiria, la macedonica e ultimamente la romana republica</seg>
+      <seg id="I_2_seg8"> aumentate,</seg>
+      <seg id="I_2_seg9"> con l'opere li fini della terra, e con la fama toccaron le stelle.</seg>
+    </prop>
+
+    <!-- CORREZIONE: "Dalla quale" è a inizio sezione [2] → legata al periodo precedente ✅ -->
+    <group id="I_2_g_caus_I" type="subordinata causale (nesso relativo, legata al periodo precedente)" level="I" mode="implicita" parent="I_2_g_main">
+      <member ref="I_2_seg1"/>
+    </group>
+    <group id="I_2_g_main" type="principale" level="0" mode="esplicita">
+      <member ref="I_2_seg2"/>
+      <member ref="I_2_seg3"/>
+      <member ref="I_2_seg4"/>
+    </group>
+    <group id="I_2_g_coord_main" type="coordinata alla principale" level="0" mode="implicita" parent="I_2_g_main">
+      <member ref="I_2_seg5"/>
+      <member ref="I_2_seg6"/>
+    </group>
+    <!-- CORREZIONE: "Per li quali" è interno al periodo → nesso relativo senza "legata al periodo precedente" -->
+    <group id="I_2_g_rel_I" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_2_g_main">
+      <member ref="I_2_seg7"/>
+      <member ref="I_2_seg9"/>
+    </group>
+    <group id="I_2_g_caus_II" type="subordinata causale" level="II" mode="implicita" parent="I_2_g_rel_I">
+      <member ref="I_2_seg8"/>
+    </group>
+</period>
+
+<period id="I_3" type="periodo" match="I_3,I_4,I_5,I_6,I_7">
+  <prop id="I_3_p_all" type="full">
+    <seg id="I_3_seg1">Le vestigie de' quali</seg>
+    <seg id="I_3_seg2">non solamente da' successor presenti, e massimamente da' miei Fiorentini, sono mal seguite,</seg>
+    <seg id="I_3_seg3">ma in tanto s'è disviato da esse,</seg>
+    <seg id="I_3_seg4">che ogni premio di virtù possiede l'ambizione.</seg>
+    <seg id="I_3_seg5">Il che,</seg>
+    <seg id="I_3_seg6">se ogni altra cosa occultasse,</seg>
+    <seg id="I_3_seg7">non lascerà</seg>
+    <seg id="I_3_seg8">nascondere l'esilio ingiustamente dato al chiarissimo uomo Dante Alighieri, uomo di sangue nobile, ragguardevole per scienza e per operazioni laudevole e degno di glorioso onore.</seg>
+  </prop>
+
+  <!-- "Le vestigie de' quali" è a inizio sezione [3] → legata al periodo precedente ✅ -->
+  <group id="I_3_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente)" level="I" mode="esplicita">
+    <member ref="I_3_seg1"/>
+    <member ref="I_3_seg2"/>
+  </group>
+  <group id="I_3_g_coord_rel" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_3_g_rel_I">
+    <member ref="I_3_seg3"/>
+  </group>
+  <group id="I_3_g_cons" type="subordinata consecutiva" level="II" mode="esplicita" parent="I_3_g_coord_rel">
+    <member ref="I_3_seg4"/>
+  </group>
+  <!-- CORREZIONE: "Il che" è interno al periodo → nesso relativo senza "legata al periodo precedente" -->
+  <group id="I_3_g_rel_II" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_3_g_rel_I">
+    <member ref="I_3_seg5"/>
+    <member ref="I_3_seg7"/>
+  </group>
+  <group id="I_3_g_cond" type="subordinata condizionale" level="II" mode="esplicita" parent="I_3_g_rel_II">
+    <member ref="I_3_seg6"/>
+  </group>
+  <group id="I_3_g_comp_obj" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_3_g_rel_II">
+    <member ref="I_3_seg8"/>
+  </group>
+</period>
+
+<period id="I_4" type="periodo" match="I_8">
+  <prop id="I_4_p_all" type="full">
+    <seg id="I_4_seg1">Intorno alla quale opera pessimamente fatta</seg>
+    <seg id="I_4_seg2">non è la presente mia intenzione</seg>
+    <seg id="I_4_seg3">di volere insistere con debite riprensioni,</seg>
+    <seg id="I_4_seg4">ma più tosto in quella parte,</seg>
+    <seg id="I_4_seg5">che le mie piccole forze possono,</seg>
+    <seg id="I_4_seg6">quella emendare;</seg>
+    <seg id="I_4_seg7">perciò che,</seg>
+    <seg id="I_4_seg8">quantunque piccol sia,</seg>
+    <seg id="I_4_seg9">pur di quella son cittadino,</seg>
+    <seg id="I_4_seg10">e agli onor d'essa mi conosco in solido obligato.</seg>
+  </prop>
+
+  <!-- "Intorno alla quale" è a inizio sezione [4] → legata al periodo precedente ✅ -->
+  <group id="I_4_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente)" level="I" mode="esplicita">
+    <member ref="I_4_seg1"/>
+    <member ref="I_4_seg2"/>
+  </group>
+  <group id="I_4_g_sogg" type="subordinata completiva soggettiva" level="II" mode="implicita" parent="I_4_g_rel_I">
+    <member ref="I_4_seg3"/>
+  </group>
+  <group id="I_4_g_coord_rel" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_4_g_rel_I">
+    <member ref="I_4_seg4"/>
+    <member ref="I_4_seg6"/>
+  </group>
+  <group id="I_4_g_rel_II" type="subordinata relativa" level="II" mode="esplicita" parent="I_4_g_coord_rel">
+    <member ref="I_4_seg5"/>
+  </group>
+  <group id="I_4_g_caus" type="subordinata causale" level="I" mode="esplicita" parent="I_4_g_rel_I">
+    <member ref="I_4_seg7"/>
+    <member ref="I_4_seg9"/>
+  </group>
+  <group id="I_4_g_conc" type="subordinata concessiva" level="II" mode="esplicita" parent="I_4_g_caus">
+    <member ref="I_4_seg8"/>
+  </group>
+  <group id="I_4_g_caus_coord" type="coordinata alla subordinata causale" level="I" mode="esplicita" parent="I_4_g_caus">
+    <member ref="I_4_seg10"/>
+  </group>
+</period>
+
+<period id="I_5" type="periodo" match="I_8">
+  <prop id="I_5_p_all" type="full">
+    <seg id="I_5_seg1">Quello adunque</seg>
+    <seg id="I_5_seg2">che la nostra città dovria verso il suo valoroso cittadino magnificamente operare,</seg>
+    <seg id="I_5_seg3">acciò che in tutto non sia detto</seg>
+    <seg id="I_5_seg4">noi esorbitare dagli antichi,</seg>
+    <seg id="I_5_seg5">intendo di fare io,</seg>
+    <seg id="I_5_seg6">non con istatua o con egregia sepoltura,</seg>
+    <seg id="I_5_seg7">delle quali è oggi dell'una appo noi spenta l'usanza,</seg>
+    <seg id="I_5_seg8">né all'altra basterieno le mie facultadi,</seg>
+    <seg id="I_5_seg9">ma con povere lettere a tanta impresa,</seg>
+    <seg id="I_5_seg10">volendo più tosto di presunzione</seg>
+    <seg id="I_5_seg11">che d'ingratitudine poter essere ripreso.</seg>
+  </prop>
+
+  <group id="I_5_g_main" type="principale" level="0" mode="esplicita">
+    <member ref="I_5_seg1"/>
+    <member ref="I_5_seg5"/>
+    <member ref="I_5_seg6"/>
+    <member ref="I_5_seg9"/>
+  </group>
+  <group id="I_5_g_rel_I" type="subordinata relativa" level="I" mode="esplicita" parent="I_5_g_main">
+    <member ref="I_5_seg2"/>
+  </group>
+  <group id="I_5_g_fin" type="subordinata finale" level="I" mode="esplicita" parent="I_5_g_main">
+    <member ref="I_5_seg3"/>
+  </group>
+  <group id="I_5_g_sogg" type="subordinata completiva soggettiva" level="II" mode="implicita" parent="I_5_g_fin">
+    <member ref="I_5_seg4"/>
+  </group>
+  <group id="I_5_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_5_g_main">
+    <member ref="I_5_seg7"/>
+  </group>
+  <group id="I_5_g_rel_II_coord" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_5_g_rel_II">
+    <member ref="I_5_seg8"/>
+  </group>
+  <group id="I_5_g_caus" type="subordinata causale" level="I" mode="implicita" parent="I_5_g_main">
+    <member ref="I_5_seg10"/>
+  </group>
+  <group id="I_5_g_comp" type="subordinata comparativa" level="II" mode="implicita" parent="I_5_g_caus">
+    <member ref="I_5_seg11"/>
+  </group>
+</period>
+
+<period id="I_6" type="periodo" match="I_9">
+  <prop id="I_6_p_all" type="full">
+    <seg id="I_6_seg1">Scriverò dunque in istilo assai umile e leggiero,</seg>
+    <seg id="I_6_seg2">però che più sublime nol mi presta lo 'ngegno,</seg>
+    <seg id="I_6_seg3">e nel nostro fiorentino idioma,</seg>
+    <seg id="I_6_seg4">acciò che da quello</seg>
+    <seg id="I_6_seg5">che Dante medesimo usò nella maggior parte delle sue opere</seg>
+    <seg id="I_6_seg6">non discordi,</seg>
+    <seg id="I_6_seg7">quelle cose,</seg>
+    <seg id="I_6_seg8">le quali esso di sé onestamente tacette,</seg>
+    <seg id="I_6_seg9">cioè la nobiltà della sua origine, la vita, gli studii e i costumi; raccogliendo appresso in uno l'opere da lui fatte,</seg>
+    <seg id="I_6_seg10">nelle quali esso sé chiaro ha renduto a' futuri.</seg>
+  </prop>
+
+  <group id="I_6_g_main" type="principale" level="0" mode="esplicita">
+    <member ref="I_6_seg1"/>
+    <member ref="I_6_seg3"/>
+    <member ref="I_6_seg7"/>
+  </group>
+  <group id="I_6_g_caus" type="subordinata causale" level="I" mode="esplicita" parent="I_6_g_main">
+    <member ref="I_6_seg2"/>
+  </group>
+  <group id="I_6_g_fin" type="subordinata finale" level="I" mode="esplicita" parent="I_6_g_main">
+    <member ref="I_6_seg4"/>
+    <member ref="I_6_seg6"/>
+  </group>
+  <group id="I_6_g_rel_I" type="subordinata relativa" level="II" mode="esplicita" parent="I_6_g_fin">
+    <member ref="I_6_seg5"/>
+  </group>
+  <group id="I_6_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_6_g_main">
+    <member ref="I_6_seg8"/>
+  </group>
+  <!-- CORREZIONE: uniti apposizione + raccogliendo come in versione I -->
+  <group id="I_6_g_coord_main" type="coordinata alla principale" level="0" mode="implicita" parent="I_6_g_main">
+    <member ref="I_6_seg9"/>
+  </group>
+  <group id="I_6_g_rel_III" type="subordinata relativa" level="I" mode="esplicita" parent="I_6_g_coord_main">
+    <member ref="I_6_seg10"/>
+  </group>
+</period>
+
+<period id="I_7" type="periodo" match="I_10">
+  <prop id="I_7_p_all" type="full">
+    <seg id="I_7_seg1">Il che acciò che compiutamente si possa fare,</seg>
+    <seg id="I_7_seg2">umilmente priego Colui,</seg>
+    <seg id="I_7_seg3">il quale di spezial grazia lui trasse,</seg>
+    <seg id="I_7_seg4">come leggiamo,</seg>
+    <seg id="I_7_seg5">per sì alta scala</seg>
+    <seg id="I_7_seg6">a contemplarsi,</seg>
+    <seg id="I_7_seg7">che me al presente aiuti e, in onore e gloria del suo santissimo nome, e la debole mano guidi,</seg>
+    <seg id="I_7_seg8">e regga lo 'ngegno mio.</seg>
+  </prop>
+
+  <!-- CORREZIONE: "Il che acciò che compiutamente si possa fare" è unico seg, relativa impropria finale, a inizio sezione [7] → legata al periodo precedente -->
+  <group id="I_7_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente, impropria finale)" level="I" mode="esplicita" parent="I_7_g_main">
+    <member ref="I_7_seg1"/>
+  </group>
+  <!-- CORREZIONE: principale separata -->
+  <group id="I_7_g_main" type="principale" level="0" mode="esplicita">
+    <member ref="I_7_seg2"/>
+  </group>
+  <group id="I_7_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_7_g_main">
+    <member ref="I_7_seg3"/>
+    <member ref="I_7_seg5"/>
+  </group>
+  <!-- CORREZIONE: incidentale modale -->
+  <group id="I_7_g_inc" type="subordinata incidentale modale" level="I" mode="esplicita" parent="I_7_g_main">
+    <member ref="I_7_seg4"/>
+  </group>
+  <!-- CORREZIONE: limitativa -->
+  <group id="I_7_g_lim" type="subordinata limitativa" level="II" mode="implicita" parent="I_7_g_rel_II">
+    <member ref="I_7_seg6"/>
+  </group>
+  <!-- CORREZIONE: completiva oggettiva separata dalla sua coordinata -->
+  <group id="I_7_g_obj" type="subordinata completiva oggettiva" level="I" mode="esplicita" parent="I_7_g_main">
+    <member ref="I_7_seg7"/>
+  </group>
+  <group id="I_7_g_obj_coord" type="coordinata alla subordinata completiva oggettiva" level="I" mode="esplicita" parent="I_7_g_obj">
+    <member ref="I_7_seg8"/>
+  </group>
+</period>
+
 </text>
