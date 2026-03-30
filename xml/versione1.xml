@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <text>
-  <!-- REDAZIONE I - CAPITOLO I -->
   
 <period id="I_1" type="periodo">
     <prop id="I_1_p_all" type="full">
@@ -31,107 +30,87 @@
       <seg id="I_1_seg25"> quella non potere stare in alcun modo.</seg>
     </prop>
 
-    <!-- PRINCIPALE: Solone era spesse volte usato -->
     <group id="I_1_g_main" type="principale" level="0" mode="esplicita">
       <member ref="I_1_seg1"/>
       <member ref="I_1_seg4"/>
       <member ref="I_1_seg6"/>
     </group>
 
-    <!-- SUBORDINATA RELATIVA I grado: il cui petto fu reputato -->
     <group id="I_1_g_rel_I" type="subordinata relativa" level="I" mode="esplicita" parent="I_1_g_main">
       <member ref="I_1_seg2"/>
     </group>
 
-    <!-- COORDINATA ALLA SUBORDINATA RELATIVA: e le cui leggi sono -->
     <group id="I_1_g_rel_I_coord" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_1_g_rel_I">
       <member ref="I_1_seg3"/>
     </group>
 
-    <!-- SUBORDINATA LIMITATIVA I grado: secondo che dicono alcuni -->
     <group id="I_1_g_lim_I" type="subordinata limitativa" level="I" mode="esplicita" parent="I_1_g_main">
       <member ref="I_1_seg5"/>
     </group>
 
-    <!-- SUBORDINATA COMPLETIVA OGGETTIVA I grado: di dire ogni republica -->
     <group id="I_1_g_comp_I" type="subordinata completiva oggettiva" level="I" mode="implicita" parent="I_1_g_main">
       <member ref="I_1_seg7"/>
       <member ref="I_1_seg8"/>
     </group>
 
-    <!-- COORDINATA ALLA PRINCIPALE (verbo sottinteso): sì come noi -->
     <group id="I_1_g_coord_main" type="coordinata alla principale" level="0" mode="sottintesa" parent="I_1_g_main">
       <member ref="I_1_seg9"/>
     </group>
 
-    <!-- SUBORDINATA COMPLETIVA OGGETTIVA II grado: andare -->
     <group id="I_1_g_comp_II" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_I">
       <member ref="I_1_seg10"/>
     </group>
 
-    <!-- COORDINATA ALLA COMPLETIVA OGGETTIVA II grado: e stare sopra due piedi -->
     <group id="I_1_g_comp_II_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_II">
       <member ref="I_1_seg11"/>
     </group>
 
-    <!-- SUBORDINATA RELATIVA (nesso relativo) I grado: de' quali affermava -->
     <group id="I_1_g_rel_II" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_1_g_main">
       <member ref="I_1_seg12"/>
     </group>
 
-    <!-- SUBORDINATA COMPLETIVA OGGETTIVA II grado: essere il destro il non lasciare... -->
     <group id="I_1_g_comp_II_2" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_rel_II">
       <member ref="I_1_seg13"/>
     </group>
 
-    <!-- COORDINATA ALLA COMPLETIVA OGGETTIVA II grado: e il sinistro ogni ben fatto remunerare -->
     <group id="I_1_g_comp_II_2_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="implicita" parent="I_1_g_comp_II_2">
       <member ref="I_1_seg14"/>
     </group>
 
-    <!-- COORDINATA ALLA PRINCIPALE (implicita, gerundio): aggiugnendo che -->
     <group id="I_1_g_coord_main_1" type="coordinata alla principale" level="0" mode="implicita" parent="I_1_g_main">
       <member ref="I_1_seg15"/>
     </group>
 
-    <!-- SUBORDINATA CONDIZIONALE I grado (protasi): qualunque... si sottraeva -->
     <group id="I_1_g_cond_I" type="subordinata condizionale" level="I" mode="esplicita" parent="I_1_g_coord_main_1">
       <member ref="I_1_seg16"/>
     </group>
 
-    <!-- COORDINATA ALLA CONDIZIONALE I grado: o meno che bene si servava -->
     <group id="I_1_g_cond_I_coord" type="coordinata alla subordinata condizionale" level="I" mode="esplicita" parent="I_1_g_cond_I">
       <member ref="I_1_seg17"/>
     </group>
 
-    <!-- SUBORDINATA COMPLETIVA OGGETTIVA I grado: quella republica convenire -->
     <group id="I_1_g_comp_obj_I" type="subordinata completiva oggettiva" level="I" mode="implicita" parent="I_1_g_coord_main_1">
       <member ref="I_1_seg18"/>
       <member ref="I_1_seg20"/>
     </group>
 
-    <!-- SUBORDINATA RELATIVA II grado: che 'l faceva -->
     <group id="I_1_g_rel_III" type="subordinata relativa" level="II" mode="esplicita" parent="I_1_g_comp_obj_I">
       <member ref="I_1_seg19"/>
     </group>
 
-    <!-- SUBORDINATA COMPLETIVA SOGGETTIVA II grado: andare sciancata -->
     <group id="I_1_g_comp_sogg_II" type="subordinata completiva soggettiva" level="II" mode="implicita" parent="I_1_g_comp_obj_I">
       <member ref="I_1_seg21"/>
     </group>
 
-    <!-- COORDINATA ALLA PRINCIPALE: e quasi certissimo avea -->
     <group id="I_1_g_coord_main_2" type="coordinata alla principale" level="0" mode="esplicita" parent="I_1_g_main">
       <member ref="I_1_seg22"/>
       <member ref="I_1_seg24"/>
     </group>
 
-    <!-- SUBORDINATA CONDIZIONALE I grado (protasi): se per isciagura si peccasse in amendue -->
     <group id="I_1_g_cond_I_2" type="subordinata condizionale" level="I" mode="esplicita" parent="I_1_g_coord_main_2">
       <member ref="I_1_seg23"/>
     </group>
 
-    <!-- SUBORDINATA COMPLETIVA OGGETTIVA I grado: quella non potere stare in alcun modo -->
     <group id="I_1_g_comp_obj_I_2" type="subordinata completiva oggettiva" level="I" mode="implicita" parent="I_1_g_coord_main_2">
       <member ref="I_1_seg25"/>
     </group>
@@ -152,36 +131,30 @@
       <seg id="I_2_seg10"> con l'opere le fini della terra, e con la fama toccaron le stelle.</seg>
     </prop>
 
-    <!-- PRINCIPALE: alcuna volta di deità... onoravano i valorosi -->
     <group id="I_2_g_main" type="principale" level="0" mode="esplicita">
       <member ref="I_2_seg2"/>
       <member ref="I_2_seg3"/>
       <member ref="I_2_seg4"/>
     </group>
 
-    <!-- SUBORDINATA CAUSALE I grado (participiale): Mossi adunque... popoli da questa laudevole sentenzia -->
     <group id="I_2_g_caus_I" type="subordinata causale" level="I" mode="implicita" parent="I_2_g_main">
       <member ref="I_2_seg1"/>
     </group>
 
-    <!-- COORDINATA ALLA PRINCIPALE: le pene... non curo -->
     <group id="I_2_g_coord_main" type="coordinata alla principale" level="0" mode="esplicita" parent="I_2_g_main">
       <member ref="I_2_seg5"/>
       <member ref="I_2_seg6"/>
     </group>
 
-    <!-- SUBORDINATA COMPLETIVA OGGETTIVA I grado: di raccontare -->
     <group id="I_2_g_comp_obj_I" type="subordinata completiva oggettiva" level="I" mode="implicita" parent="I_2_g_coord_main">
       <member ref="I_2_seg7"/>
     </group>
 
-    <!-- SUBORDINATA RELATIVA (nesso relativo) I grado: Per li quali onori... toccaron le stelle -->
     <group id="I_2_g_rel_I" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_2_g_main">
       <member ref="I_2_seg8"/>
       <member ref="I_2_seg10"/>
     </group>
 
-    <!-- SUBORDINATA CAUSALE II grado (participiale): aumentate -->
     <group id="I_2_g_caus_II" type="subordinata causale" level="II" mode="implicita" parent="I_2_g_rel_I">
       <member ref="I_2_seg9"/>
     </group>
@@ -206,64 +179,52 @@
     <seg id="I_3_seg14">della Fortuna ma non della colpa partecipi.</seg>
   </prop>
 
-  <!-- RELATIVA (nesso relativo, legata al periodo precedente): Le vestigie de' quali ... sono male seguite -->
   <group id="I_3_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente)" level="I" mode="esplicita">
     <member ref="I_3_seg1"/>
     <member ref="I_3_seg2"/>
   </group>
 
-  <!-- COORDINATA ALLA RELATIVA: ma in tanto s'è disviato da esse -->
   <group id="I_3_g_coord_rel" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_3_g_rel_I">
     <member ref="I_3_seg3"/>
   </group>
 
-  <!-- CONSECUTIVA II grado: che ogni premio di virtù possiede l'ambizione -->
   <group id="I_3_g_cons" type="subordinata consecutiva" level="II" mode="esplicita" parent="I_3_g_coord_rel">
     <member ref="I_3_seg4"/>
   </group>
 
-  <!-- RELATIVA (nesso relativo): per che ... possiamo vedere -->
   <group id="I_3_g_rel_II" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_3_g_rel_I">
     <member ref="I_3_seg5"/>
     <member ref="I_3_seg7"/>
   </group>
 
-  <!-- RELATIVA III grado: che a ciò con occhio ragionevole vuole guardare -->
   <group id="I_3_g_rel_III" type="subordinata relativa" level="II" mode="esplicita" parent="I_3_g_rel_II">
     <member ref="I_3_seg6"/>
   </group>
 
-  <!-- COMPLETIVA OGGETTIVA II grado: li malvagi... elevare -->
   <group id="I_3_g_obj_I" type="subordinata completiva oggettiva" level="II" mode="implicita" parent="I_3_g_rel_II">
     <member ref="I_3_seg8"/>
   </group>
 
-  <!-- COORDINATA ALLA COMPLETIVA OGGETTIVA: e li buoni scacciare, deprimere e abbassare -->
   <group id="I_3_g_obj_I_coord" type="coordinata alla subordinata completiva oggettiva" level="II" mode="implicita" parent="I_3_g_obj_I">
     <member ref="I_3_seg9"/>
   </group>
 
-  <!-- RELATIVA (nesso relativo, impropria interrogativa indiretta): Alle quali cose qual fine serbi il giudicio di Dio -->
   <group id="I_3_g_rel_IV" type="subordinata relativa (nesso relativo, impropria interrogativa indiretta)" level="I" mode="esplicita" parent="I_3_g_rel_I">
     <member ref="I_3_seg10"/>
   </group>
 
-  <!-- PRINCIPALE: coloro il veggiano -->
   <group id="I_3_g_main" type="principale" level="0" mode="esplicita">
     <member ref="I_3_seg11"/>
   </group>
 
-  <!-- RELATIVA I grado: che il timone governano di questa nave -->
   <group id="I_3_g_rel_V" type="subordinata relativa" level="I" mode="esplicita" parent="I_3_g_main">
     <member ref="I_3_seg12"/>
   </group>
 
-  <!-- CAUSALE I grado: perciò che noi... siamo trasportati dal fiotto -->
   <group id="I_3_g_caus" type="subordinata causale" level="I" mode="esplicita" parent="I_3_g_main">
     <member ref="I_3_seg13"/>
   </group>
 
-  <!-- MODALE II grado: della Fortuna ma non della colpa partecipi -->
   <group id="I_3_g_mod" type="subordinata modale" level="II" mode="implicita" parent="I_3_g_caus">
     <member ref="I_3_seg14"/>
   </group>
@@ -289,74 +250,59 @@
     <seg id="I_4_seg15">che esse non gli avessero altissimi meriti apparecchiati.</seg>
   </prop>
 
-  <!-- COORDINATA ESPLICITA (legata al periodo precedente): E, una sola mi fia assai avere raccontata -->
   <group id="I_4_g_coord" type="coordinata alla principale (legata al periodo precedente)" level="0" mode="esplicita">
     <member ref="I_4_seg1"/>
     <member ref="I_4_seg5"/>
   </group>
 
-  <!-- CONCESSIVA I grado: come che ... si potessero le predette cose verificare -->
   <group id="I_4_g_conc" type="subordinata concessiva" level="I" mode="esplicita" parent="I_4_g_coord">
     <member ref="I_4_seg2"/>
   </group>
 
-  <!-- FINALE I grado: per meno scoprire li nostri difetti -->
   <group id="I_4_g_fin" type="subordinata finale" level="I" mode="implicita" parent="I_4_g_coord">
     <member ref="I_4_seg3"/>
   </group>
 
-  <!-- COORDINATA ALLA FINALE: e per pervenire al mio principale intento -->
   <group id="I_4_g_fin_coord" type="coordinata alla subordinata finale" level="I" mode="implicita" parent="I_4_g_fin">
     <member ref="I_4_seg4"/>
   </group>
 
-  <!-- COORDINATA (incidentale): né questa fia poco o picciola -->
   <group id="I_4_g_coord_inc" type="coordinata alla principale (legata al periodo precedente)" level="0" mode="esplicita" parent="I_4_g_coord">
     <member ref="I_4_seg6"/>
   </group>
 
-  <!-- SUBORDINATA I grado: ricordando l'esilio del chiarissimo uomo Dante Alighieri -->
   <group id="I_4_g_sub_ger" type="subordinata causale" level="I" mode="implicita" parent="I_4_g_coord">
     <member ref="I_4_seg7"/>
   </group>
 
-  <!-- RELATIVA (nesso relativo): Il quale ... assai il mostrano e mostreranno le cose -->
   <group id="I_4_g_rel_II" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_4_g_coord">
     <member ref="I_4_seg8"/>
     <member ref="I_4_seg10"/>
   </group>
 
-  <!-- INTERROGATIVA INDIRETTA II grado: quanto per vertù e per scienzia e per buone operazioni meritasse -->
   <group id="I_4_g_interr" type="subordinata interrogativa indiretta" level="II" mode="esplicita" parent="I_4_g_rel_II">
     <member ref="I_4_seg9"/>
   </group>
 
-  <!-- RELATIVA II grado: che da lui fatte appaiono -->
   <group id="I_4_g_rel_III" type="subordinata relativa" level="II" mode="esplicita" parent="I_4_g_rel_II">
     <member ref="I_4_seg11"/>
   </group>
 
-  <!-- RELATIVA (nesso relativo): le quali ... niuno dubbio ci è -->
   <group id="I_4_g_rel_IV" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_4_g_rel_II">
     <member ref="I_4_seg12"/>
     <member ref="I_4_seg14"/>
   </group>
 
-  <!-- CONDIZIONALE II grado: se in una republica giusta fossero state operate -->
   <group id="I_4_g_cond" type="subordinata condizionale" level="II" mode="esplicita" parent="I_4_g_rel_IV">
     <member ref="I_4_seg13"/>
   </group>
 
-  <!-- COMPLETIVA DICHIARATIVA II grado: che esse non gli avessero altissimi meriti apparecchiati -->
   <group id="I_4_g_dich" type="subordinata completiva dichiarativa" level="II" mode="esplicita" parent="I_4_g_rel_IV">
     <member ref="I_4_seg15"/>
   </group>
 
 </period>
 
-<!-- ============================================================ -->
-<!-- PERIODO I_5 -->
-<!-- ============================================================ -->
 <period id="I_5" type="periodo">
   <prop id="I_5_p_all" type="full">
     <seg id="I_5_seg1">Oh scellerato pensiero, oh disonesta opera, oh miserabile esempio e di futura ruina manifesto argomento!</seg>
@@ -365,26 +311,20 @@
     <seg id="I_5_seg4">maculazione della gloriosissima fama, con false colpe gli fur donate.</seg>
   </prop>
 
-  <!-- ESCLAMATIVA (principale): Oh scellerato pensiero... -->
   <group id="I_5_g_escl" type="principale" level="0" mode="esplicita">
     <member ref="I_5_seg1"/>
   </group>
 
-  <!-- PRINCIPALE: In luogo di quegli ... gli fur donate -->
   <group id="I_5_g_main" type="principale" level="0" mode="esplicita">
     <member ref="I_5_seg2"/>
     <member ref="I_5_seg4"/>
   </group>
 
-  <!-- CONDIZIONALE I grado: se fare si fosse potuto -->
   <group id="I_5_g_cond" type="subordinata condizionale" level="I" mode="esplicita" parent="I_5_g_main">
     <member ref="I_5_seg3"/>
   </group>
 </period>
 
-<!-- ============================================================ -->
-<!-- PERIODO I_6 -->
-<!-- ============================================================ -->
 <period id="I_6" type="periodo">
   <prop id="I_6_p_all" type="full">
     <seg id="I_6_seg1">Delle quali cose le recenti orme della sua fuga e l'ossa nelle altrui terre sepulte e la sparta prole per l'altrui case,</seg>
@@ -399,56 +339,44 @@
     <seg id="I_6_seg10">che sia onesto il tacere.</seg>
   </prop>
 
-  <!-- RELATIVA (nesso relativo, legata al periodo precedente): Delle quali cose ... ne fanno chiare -->
   <group id="I_6_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente)" level="I" mode="esplicita">
     <member ref="I_6_seg1"/>
     <member ref="I_6_seg2"/>
   </group>
 
-  <!-- PRINCIPALE (interrogativa retorica): non dovrebbe questa una bastare -->
   <group id="I_6_g_main" type="principale" level="0" mode="esplicita">
     <member ref="I_6_seg5"/>
   </group>
 
-  <!-- CONDIZIONALE I grado: Se a tutte l'altre iniquità fiorentine fosse possibile il nascondersi agli occhi di Dio -->
   <group id="I_6_g_cond" type="subordinata condizionale" level="I" mode="esplicita" parent="I_6_g_main">
     <member ref="I_6_seg3"/>
   </group>
 
-  <!-- RELATIVA II grado: che veggono tutto -->
   <group id="I_6_g_rel_II" type="subordinata relativa" level="II" mode="esplicita" parent="I_6_g_cond">
     <member ref="I_6_seg4"/>
   </group>
 
-  <!-- FINALE I grado: a provocare sopra sé la sua ira? -->
   <group id="I_6_g_fin" type="subordinata finale" level="I" mode="implicita" parent="I_6_g_main">
     <member ref="I_6_seg6"/>
   </group>
 
-  <!-- PRINCIPALE (risposta): Certo sì -->
   <group id="I_6_g_main2" type="principale" level="0" mode="esplicita">
     <member ref="I_6_seg7"/>
   </group>
 
-  <!-- PRINCIPALE: giudico -->
   <group id="I_6_g_main3" type="principale" level="0" mode="esplicita">
     <member ref="I_6_seg9"/>
   </group>
 
-  <!-- LIMITATIVA I grado: Chi in contrario sia esaltato -->
   <group id="I_6_g_lim" type="subordinata limitativa" level="I" mode="esplicita" parent="I_6_g_main3">
     <member ref="I_6_seg8"/>
   </group>
 
-  <!-- COMPLETIVA OGGETTIVA I grado: che sia onesto il tacere -->
   <group id="I_6_g_obj" type="subordinata completiva oggettiva" level="I" mode="esplicita" parent="I_6_g_main3">
     <member ref="I_6_seg10"/>
   </group>
 </period>
 
-<!-- ============================================================ -->
-<!-- PERIODO I_7 -->
-<!-- ============================================================ -->
 <period id="I_7" type="periodo">
   <prop id="I_7_p_all" type="full">
     <seg id="I_7_seg1">Sì che,</seg>
@@ -478,115 +406,92 @@
     <seg id="I_7_seg25">che appieno supplisca la sua tardità.</seg>
   </prop>
 
-  <!-- CONSECUTIVA (legata al periodo precedente): Sì che ... è il presente mondo uscito -->
   <group id="I_7_g_cons_I" type="subordinata consecutiva (legata al periodo precedente)" level="I" mode="esplicita">
     <member ref="I_7_seg1"/>
     <member ref="I_7_seg3"/>
   </group>
 
-  <!-- MODALE II grado: bene ragguardando -->
   <group id="I_7_g_mod" type="subordinata modale" level="II" mode="implicita" parent="I_7_g_cons_I">
     <member ref="I_7_seg2"/>
   </group>
 
-  <!-- RELATIVA II grado: del quale di sopra toccai -->
   <group id="I_7_g_rel_II" type="subordinata relativa" level="II" mode="esplicita" parent="I_7_g_cons_I">
     <member ref="I_7_seg4"/>
   </group>
 
-  <!-- COORDINATA ALLA CONSECUTIVA: ma ha del tutto nel contrario vòlti i piedi -->
   <group id="I_7_g_coord_cons" type="coordinata alla subordinata consecutiva" level="I" mode="esplicita" parent="I_7_g_cons_I">
     <member ref="I_7_seg5"/>
   </group>
 
-  <!-- RELATIVA (nesso relativo): Per che assai manifesto appare -->
   <group id="I_7_g_rel_III" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_7_g_cons_I">
     <member ref="I_7_seg6"/>
   </group>
 
-  <!-- COMPLETIVA SOGGETTIVA II grado: che ... niuna altra cosa essere di ciò cagione -->
   <group id="I_7_g_sogg" type="subordinata completiva soggettiva" level="II" mode="esplicita" parent="I_7_g_rel_III">
     <member ref="I_7_seg7"/>
     <member ref="I_7_seg11"/>
   </group>
 
-  <!-- CONDIZIONALE III grado: se noi e gli altri ... stiamo in piede -->
   <group id="I_7_g_cond_I" type="subordinata condizionale" level="III" mode="esplicita" parent="I_7_g_sogg">
     <member ref="I_7_seg8"/>
     <member ref="I_7_seg10"/>
   </group>
 
-  <!-- RELATIVA IV grado: che in simile modo vivono -->
   <group id="I_7_g_rel_IV" type="subordinata relativa" level="IV" mode="esplicita" parent="I_7_g_cond_I">
     <member ref="I_7_seg9"/>
   </group>
 
-  <!-- ECCETTUATIVA III grado: se non che o per lunga usanza la natura delle cose è mutata -->
   <group id="I_7_g_ecc" type="subordinata eccettuativa" level="III" mode="esplicita" parent="I_7_g_sogg">
     <member ref="I_7_seg12"/>
   </group>
 
-  <!-- COMPARATIVA IV grado: come sovente veggiamo -->
   <group id="I_7_g_comp" type="subordinata comparativa" level="IV" mode="esplicita" parent="I_7_g_ecc">
     <member ref="I_7_seg13"/>
   </group>
 
-  <!-- COMPLETIVA OGGETTIVA V grado: avvenire -->
   <group id="I_7_g_obj_V" type="subordinata completiva oggettiva" level="V" mode="implicita" parent="I_7_g_comp">
     <member ref="I_7_seg14"/>
   </group>
 
-  <!-- COORDINATA ALLA ECCETTUATIVA: o è speziale miracolo -->
   <group id="I_7_g_ecc_coord" type="coordinata alla subordinata eccettuativa" level="III" mode="esplicita" parent="I_7_g_ecc">
     <member ref="I_7_seg15"/>
   </group>
 
-  <!-- RELATIVA IV grado: nel quale ... Dio ne sostiene -->
   <group id="I_7_g_rel_V" type="subordinata relativa" level="IV" mode="esplicita" parent="I_7_g_ecc_coord">
     <member ref="I_7_seg16"/>
   </group>
 
-  <!-- COORDINATA ALLA ECCETTUATIVA: o è la sua pazienzia -->
   <group id="I_7_g_ecc_coord_2" type="coordinata alla subordinata eccettuativa" level="III" mode="esplicita" parent="I_7_g_ecc">
     <member ref="I_7_seg17"/>
   </group>
 
-  <!-- RELATIVA IV grado: la quale forse il nostro riconoscimento attende -->
   <group id="I_7_g_rel_VI" type="subordinata relativa" level="IV" mode="esplicita" parent="I_7_g_ecc_coord_2">
     <member ref="I_7_seg18"/>
   </group>
 
-  <!-- RELATIVA (nesso relativo): il quale ... niuno dubiti -->
   <group id="I_7_g_rel_VII" type="subordinata relativa (nesso relativo)" level="I" mode="esplicita" parent="I_7_g_rel_VI">
     <member ref="I_7_seg19"/>
     <member ref="I_7_seg21"/>
   </group>
 
-  <!-- CONDIZIONALE II grado: se a lungo andare non seguirà -->
   <group id="I_7_g_cond_II" type="subordinata condizionale" level="II" mode="esplicita" parent="I_7_g_rel_VII">
     <member ref="I_7_seg20"/>
   </group>
 
-  <!-- COMPLETIVA OGGETTIVA II grado: che la sua ira ... non ci serbi tanto più grave tormento -->
   <group id="I_7_g_obj_II" type="subordinata completiva oggettiva" level="II" mode="esplicita" parent="I_7_g_rel_VII">
     <member ref="I_7_seg22"/>
     <member ref="I_7_seg24"/>
   </group>
 
-  <!-- RELATIVA III grado: la quale con lento passo procede alla vendetta -->
   <group id="I_7_g_rel_VIII" type="subordinata relativa" level="III" mode="esplicita" parent="I_7_g_obj_II">
     <member ref="I_7_seg23"/>
   </group>
 
-  <!-- CONSECUTIVA III grado: che appieno supplisca la sua tardità -->
   <group id="I_7_g_cons" type="subordinata consecutiva" level="III" mode="esplicita" parent="I_7_g_obj_II">
     <member ref="I_7_seg25"/>
   </group>
 </period>
 
-<!-- ============================================================ -->
-<!-- PERIODO I_8 -->
-<!-- ============================================================ -->
 <period id="I_8" type="periodo">
   <prop id="I_8_p_all" type="full">
     <seg id="I_8_seg1">Ma,</seg>
@@ -614,7 +519,6 @@
     <seg id="I_8_seg23">fra le nazioni strane, verso cotanto poeta la sua patria essere stata ingrata.</seg>
   </prop>
 
-  <!-- COORDINATA (legata al periodo precedente): Ma, nondimeno ... m'ingegnerò di fare io -->
   <group id="I_8_g_coord_per" type="coordinata alla principale (legata al periodo precedente)" level="0" mode="esplicita">
     <member ref="I_8_seg1"/>
     <member ref="I_8_seg13"/>
@@ -623,92 +527,73 @@
     <member ref="I_8_seg20"/>
   </group>
 
-  <!-- CAUSALE I grado: perciò che ... quelle non solamente dobbiamo fuggire -->
   <group id="I_8_g_caus" type="subordinata causale" level="I" mode="esplicita" parent="I_8_g_coord_per">
     <member ref="I_8_seg2"/>
     <member ref="I_8_seg4"/>
   </group>
 
-  <!-- CONCESSIVA II grado: come che impunite ci paiono le mal fatte cose -->
   <group id="I_8_g_conc_I" type="subordinata concessiva" level="II" mode="esplicita" parent="I_8_g_caus">
     <member ref="I_8_seg3"/>
   </group>
 
-  <!-- COORDINATA ALLA CAUSALE: ma ancora d'ammendarle ingegnarci -->
   <group id="I_8_g_caus_coord" type="coordinata alla subordinata causale" level="I" mode="esplicita" parent="I_8_g_caus">
     <member ref="I_8_seg5"/>
   </group>
 
-  <!-- CAUSALE I grado (gerundio): conoscendo io me essere di quella medesima città -->
   <group id="I_8_g_caus_II" type="subordinata causale" level="I" mode="implicita" parent="I_8_g_coord_per">
     <member ref="I_8_seg6"/>
   </group>
 
-  <!-- CONCESSIVA II grado: avvegna che picciola parte -->
   <group id="I_8_g_conc_II" type="subordinata concessiva" level="II" mode="esplicita" parent="I_8_g_caus_II">
     <member ref="I_8_seg7"/>
   </group>
 
-  <!-- RELATIVA II grado: della quale ... Dante Alighieri fu grandissima -->
   <group id="I_8_g_rel_I" type="subordinata relativa" level="II" mode="esplicita" parent="I_8_g_caus_II">
     <member ref="I_8_seg8"/>
     <member ref="I_8_seg10"/>
   </group>
 
-  <!-- PARTICIPIALE CAUSALE III grado: considerati li meriti, la nobiltà e la vertù -->
   <group id="I_8_g_caus_part" type="subordinata causale" level="III" mode="implicita" parent="I_8_g_rel_I">
     <member ref="I_8_seg9"/>
   </group>
 
-  <!-- COORDINATA ALLA CAUSALE (gerundio): e per questo ... a' suoi onori sia in solido obligato -->
   <group id="I_8_g_caus_II_coord" type="coordinata alla subordinata causale" level="I" mode="esplicita" parent="I_8_g_caus_II">
     <member ref="I_8_seg11"/>
   </group>
 
-  <!-- CONCESSIVA I grado: come che io a tanta cosa non sia sofficiente -->
   <group id="I_8_g_conc_III" type="subordinata concessiva" level="I" mode="esplicita" parent="I_8_g_coord_per">
     <member ref="I_8_seg12"/>
   </group>
 
-  <!-- RELATIVA I grado: quello che essa dovea verso lui magnificamente fare -->
   <group id="I_8_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_8_g_coord_per">
     <member ref="I_8_seg14"/>
   </group>
 
-  <!-- CAUSALE I grado (gerundio): non avendolo fatto -->
   <group id="I_8_g_caus_III" type="subordinata causale" level="I" mode="implicita" parent="I_8_g_coord_per">
     <member ref="I_8_seg15"/>
   </group>
 
-  <!-- RELATIVA I grado: delle quali è oggi appo noi spenta l'usanza -->
   <group id="I_8_g_rel_III" type="subordinata relativa" level="I" mode="esplicita" parent="I_8_g_coord_per">
     <member ref="I_8_seg18"/>
   </group>
 
-  <!-- COORDINATA ALLA RELATIVA: né basterebbono a ciò le mie forze -->
   <group id="I_8_g_rel_III_coord" type="coordinata alla subordinata relativa" level="I" mode="esplicita" parent="I_8_g_rel_III">
     <member ref="I_8_seg19"/>
   </group>
 
-  <!-- COORDINATA: Di queste ho, e di queste darò -->
   <group id="I_8_g_coord_main" type="coordinata alla principale (legata al periodo precedente)" level="0" mode="esplicita" parent="I_8_g_coord_per">
     <member ref="I_8_seg21"/>
   </group>
 
-  <!-- FINALE I grado: acciò che ... non si possa dire -->
   <group id="I_8_g_fin" type="subordinata finale" level="I" mode="esplicita" parent="I_8_g_coord_main">
     <member ref="I_8_seg22"/>
   </group>
 
-  <!-- COMPLETIVA SOGGETTIVA II grado: la sua patria essere stata ingrata -->
   <group id="I_8_g_sogg" type="subordinata completiva soggettiva" level="II" mode="implicita" parent="I_8_g_fin">
     <member ref="I_8_seg23"/>
   </group>
 </period>
 
-<!-- ============================================================ -->
-<!-- PERIODO I_9 -->
-<!-- ============================================================ -->
 <period id="I_9" type="periodo">
   <prop id="I_9_p_all" type="full">
     <seg id="I_9_seg1">E scriverò in istilo assai umile e leggiero,</seg>
@@ -728,69 +613,55 @@
     <seg id="I_9_seg15">essere corretto.</seg>
   </prop>
 
-  <!-- COORDINATA (legata al periodo precedente): E scriverò ... quelle cose -->
   <group id="I_9_g_coord_per" type="coordinata alla principale (legata al periodo precedente)" level="0" mode="esplicita">
     <member ref="I_9_seg1"/>
     <member ref="I_9_seg3"/>
     <member ref="I_9_seg7"/>
   </group>
 
-  <!-- CAUSALE I grado: però che più alto nol mi presta lo 'ngegno -->
   <group id="I_9_g_caus" type="subordinata causale" level="I" mode="esplicita" parent="I_9_g_coord_per">
     <member ref="I_9_seg2"/>
   </group>
 
-  <!-- FINALE I grado: acciò che ... non discordi -->
   <group id="I_9_g_fin" type="subordinata finale" level="I" mode="esplicita" parent="I_9_g_coord_per">
     <member ref="I_9_seg4"/>
     <member ref="I_9_seg6"/>
   </group>
 
-  <!-- RELATIVA II grado: che egli usò nella maggior parte delle sue opere -->
   <group id="I_9_g_rel_I" type="subordinata relativa" level="II" mode="esplicita" parent="I_9_g_fin">
     <member ref="I_9_seg5"/>
   </group>
 
-  <!-- RELATIVA I grado: le quali esso di sé onestamente tacette -->
   <group id="I_9_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_9_g_coord_per">
     <member ref="I_9_seg8"/>
   </group>
 
-  <!-- COORDINATA ALLA COORDINATA (gerundio + apposizione): cioè la nobiltà ... raccogliendo appresso in uno l'opere da lui fatte -->
   <group id="I_9_g_coord_main" type="coordinata alla principale (legata al periodo precedente)" level="0" mode="implicita" parent="I_9_g_coord_per">
     <member ref="I_9_seg9"/>
   </group>
 
-  <!-- RELATIVA I grado: nelle quali esso sé sì chiaro ha renduto a' futuri -->
   <group id="I_9_g_rel_III" type="subordinata relativa" level="I" mode="esplicita" parent="I_9_g_coord_main">
     <member ref="I_9_seg10"/>
   </group>
 
-  <!-- CONSECUTIVA II grado: che forse non meno tenebre che splendore gli daranno le lettere mie -->
   <group id="I_9_g_cons" type="subordinata consecutiva" level="II" mode="esplicita" parent="I_9_g_rel_III">
     <member ref="I_9_seg11"/>
   </group>
 
-  <!-- CONCESSIVA II grado: come che ciò non sia di mio intendimento né di volere -->
   <group id="I_9_g_conc" type="subordinata concessiva" level="II" mode="esplicita" parent="I_9_g_cons">
     <member ref="I_9_seg12"/>
   </group>
 
-  <!-- COORDINATA (implicita): contento sempre ... essere corretto -->
   <group id="I_9_g_coord_main_2" type="coordinata alla principale (legata al periodo precedente)" level="0" mode="implicita" parent="I_9_g_coord_per">
     <member ref="I_9_seg13"/>
     <member ref="I_9_seg15"/>
   </group>
 
-  <!-- CONDIZIONALE I grado: là dove io difettuosamente parlassi -->
   <group id="I_9_g_cond" type="subordinata condizionale" level="I" mode="esplicita" parent="I_9_g_coord_main_2">
     <member ref="I_9_seg14"/>
   </group>
 </period>
 
-<!-- ============================================================ -->
-<!-- PERIODO I_10 -->
-<!-- ============================================================ -->
 <period id="I_10" type="periodo">
   <prop id="I_10_p_all" type="full">
     <seg id="I_10_seg1">Il che acciò che non avvenga,</seg>
@@ -802,37 +673,30 @@
     <seg id="I_10_seg7">e guidi lo 'ngegno mio e la debole mano.</seg>
   </prop>
 
-  <!-- RELATIVA (nesso relativo, legata al periodo precedente, impropria finale): Il che acciò che non avvenga -->
   <group id="I_10_g_rel_I" type="subordinata relativa (nesso relativo, legata al periodo precedente, impropria finale)" level="I" mode="esplicita" parent="I_10_g_main">
     <member ref="I_10_seg1"/>
   </group>
 
-  <!-- PRINCIPALE: umilemente priego Colui -->
   <group id="I_10_g_main" type="principale" level="0" mode="esplicita">
     <member ref="I_10_seg2"/>
   </group>
 
-  <!-- RELATIVA I grado: che lui trasse per sì alta scala -->
   <group id="I_10_g_rel_II" type="subordinata relativa" level="I" mode="esplicita" parent="I_10_g_main">
     <member ref="I_10_seg3"/>
   </group>
 
-  <!-- LIMITATIVA II grado: a vedersi -->
   <group id="I_10_g_lim" type="subordinata limitativa" level="II" mode="implicita" parent="I_10_g_rel_II">
     <member ref="I_10_seg4"/>
   </group>
 
-  <!-- INCIDENTALE MODALE I grado: come sappiamo -->
   <group id="I_10_g_inc" type="subordinata incidentale modale" level="I" mode="esplicita" parent="I_10_g_main">
     <member ref="I_10_seg5"/>
   </group>
 
-  <!-- COMPLETIVA OGGETTIVA I grado: che al presente aiuti -->
   <group id="I_10_g_obj" type="subordinata completiva oggettiva" level="I" mode="esplicita" parent="I_10_g_main">
     <member ref="I_10_seg6"/>
   </group>
 
-  <!-- COORDINATA ALLA COMPLETIVA OGGETTIVA: e guidi lo 'ngegno mio e la debole mano -->
   <group id="I_10_g_obj_coord" type="coordinata alla subordinata completiva oggettiva" level="I" mode="esplicita" parent="I_10_g_obj">
     <member ref="I_10_seg7"/>
   </group>
