@@ -1,27 +1,70 @@
 import re
 import sys
+from html import escape
 
 
 # ══════════════════════════════════════════════════════════════
-# ABBREVIAZIONI SUBTYPE
+# CONFIGURAZIONE DELLE CATEGORIE
 # ══════════════════════════════════════════════════════════════
+#
+# Per aggiungere una nuova categoria NON serve modificare il parser:
+# - per una nuova subordinata, aggiungila alla famiglia opportuna qui sotto;
+# - per una nuova coordinata, aggiungila a COORDINATE_TYPES;
+# - anche una categoria non registrata viene comunque accettata: il parser
+#   la conserva e genera automaticamente un'abbreviazione per l'id XML.
 
-SUBTYPE_ABBR = {
-    'completiva oggettiva':     'comp',
-    'completiva soggettiva':    'comp_sogg',
-    'relativa':                 'rel',
-    'limitativa':               'lim',
-    'causale':                  'caus',
-    'temporale':                'temp',
-    'finale':                   'fin',
-    'consecutiva':              'cons',
-    'concessiva':               'conc',
-    'condizionale':             'cond',
-    'comparativa':              'compar',
-    'modale':                   'mod',
-    'dichiarativa':             'dich',
-    'interrogativa indiretta':  'int_ind',
-    'avversativa':              'avv',
+SUBORDINATE_FAMILIES = {
+    'completiva': {
+        'oggettiva': 'comp_obj',
+        'soggettiva': 'comp_sogg',
+        'dichiarativa': 'dich',
+        'interrogativa indiretta': 'int_ind',
+    },
+    'relativa': {
+        'relativa': 'rel',
+    },
+    'circostanziale': {
+        'temporale': 'temp',
+        'causale': 'caus',
+        'finale': 'fin',
+        'consecutiva': 'cons',
+        'condizionale': 'cond',
+        'concessiva': 'conc',
+        'comparativa': 'compar',
+        'modale': 'mod',
+        # Tipi legacy / opzionali: mantenuti per retrocompatibilità.
+        'limitativa': 'lim',
+        'avversativa': 'avv',
+    },
+}
+
+COORDINATE_TYPES = {
+    'copulativa': 'coord_cop',
+    'disgiuntiva': 'coord_dis',
+    'avversativa': 'coord_avv',
+    'conclusiva': 'coord_concl',
+    'esplicativa': 'coord_esp',
+}
+
+# Alias accettati nell'input vecchio o in forme più verbose.
+SUBTYPE_ALIASES = {
+    'completiva oggettiva': ('completiva', 'oggettiva'),
+    'oggettiva': ('completiva', 'oggettiva'),
+    'completiva soggettiva': ('completiva', 'soggettiva'),
+    'soggettiva': ('completiva', 'soggettiva'),
+    'dichiarativa': ('completiva', 'dichiarativa'),
+    'interrogativa indiretta': ('completiva', 'interrogativa indiretta'),
+    'relativa': ('relativa', 'relativa'),
+    'temporale': ('circostanziale', 'temporale'),
+    'causale': ('circostanziale', 'causale'),
+    'finale': ('circostanziale', 'finale'),
+    'consecutiva': ('circostanziale', 'consecutiva'),
+    'condizionale': ('circostanziale', 'condizionale'),
+    'concessiva': ('circostanziale', 'concessiva'),
+    'comparativa': ('circostanziale', 'comparativa'),
+    'modale': ('circostanziale', 'modale'),
+    'limitativa': ('circostanziale', 'limitativa'),
+    'avversativa': ('circostanziale', 'avversativa'),
 }
 
 MODE_MAP = {
@@ -30,16 +73,36 @@ MODE_MAP = {
     's': 'sottintesa',
 }
 
+VERBAL_FORM_ALIASES = {
+    'inf': 'infinito',
+    'infinito': 'infinito',
+    'ger': 'gerundio',
+    'gerundio': 'gerundio',
+    'part': 'participio',
+    'participio': 'participio',
+    'fin': 'finita',
+    'finita': 'finita',
+    'ell': 'ellissi',
+    'ellissi': 'ellissi',
+}
 
-def abbreviate(subtype):
-    if not subtype:
-        return 'sub'
-    key = subtype.lower().strip()
-    return SUBTYPE_ABBR.get(key, key.split()[0][:3])
+
+def _norm(s):
+    return re.sub(r'\s+', ' ', (s or '').strip().lower())
+
+
+def _slug(s, maxlen=18):
+    s = _norm(s)
+    s = re.sub(r'[^a-z0-9àèéìòù]+', '_', s, flags=re.IGNORECASE).strip('_')
+    return (s or 'x')[:maxlen]
 
 
 def _to_roman(n):
-    vals = [(10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
+    vals = [
+        (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
+        (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
+        (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')
+    ]
     result = ''
     for v, r in vals:
         while n >= v:
@@ -49,11 +112,68 @@ def _to_roman(n):
 
 
 def _is_roman(s):
-    return bool(re.match(r'^[IVXLC]+$', s)) and s == s.upper()
+    return bool(re.fullmatch(r'[IVXLCDM]+', (s or '').strip()))
 
 
 def _is_mode(s):
-    return s.lower() in MODE_MAP and len(s) == 1 and s == s.lower()
+    s = (s or '').strip()
+    return s in MODE_MAP
+
+
+def _parse_verbal_form(token):
+    token = _norm(token)
+    if token.startswith('vf='):
+        token = token[3:].strip()
+    elif token.startswith('forma-verbale='):
+        token = token.split('=', 1)[1].strip()
+    else:
+        return None
+    return VERBAL_FORM_ALIASES.get(token, token)
+
+
+def infer_subordinate_family_and_subtype(label_tail):
+    """
+    Accetta, tra le altre:
+      subordinata completiva oggettiva
+      subordinata oggettiva
+      subordinata circostanziale comparativa
+      subordinata comparativa
+      subordinata relativa
+
+    Se una nuova categoria non è registrata ma è scritta con una famiglia
+    esplicita (es. 'subordinata circostanziale eccettuativa'), viene mantenuta.
+    """
+    tail = _norm(label_tail)
+    if not tail:
+        return None, None
+
+    for family in SUBORDINATE_FAMILIES:
+        prefix = family + ' '
+        if tail == family:
+            subtype = family if family == 'relativa' else None
+            return family, subtype
+        if tail.startswith(prefix):
+            subtype = tail[len(prefix):].strip() or None
+            return family, subtype
+
+    if tail in SUBTYPE_ALIASES:
+        return SUBTYPE_ALIASES[tail]
+
+    # Nuovo sottotipo non registrato: lo conserviamo senza bloccare l'utente.
+    return 'altro', tail
+
+
+def subordinate_abbr(family, subtype):
+    family = _norm(family)
+    subtype = _norm(subtype)
+    if family in SUBORDINATE_FAMILIES and subtype in SUBORDINATE_FAMILIES[family]:
+        return SUBORDINATE_FAMILIES[family][subtype]
+    return 'sub_' + _slug(subtype or family, 14)
+
+
+def coordinate_abbr(coord_type):
+    coord_type = _norm(coord_type)
+    return COORDINATE_TYPES.get(coord_type, 'coord_' + _slug(coord_type or 'gen', 12))
 
 
 # ══════════════════════════════════════════════════════════════
@@ -61,18 +181,50 @@ def _is_mode(s):
 # ══════════════════════════════════════════════════════════════
 
 def parse_input(text):
-    text_match = re.search(r'===TEXT===\n(.*?)\n===ANALYSIS===', text, re.DOTALL)
+    text_match = re.search(r'===TEXT===\s*\n(.*?)\n===ANALYSIS===', text, re.DOTALL)
     analysis_match = re.search(r'===ANALYSIS===(.*?)$', text, re.DOTALL)
     if not (text_match and analysis_match):
-        raise ValueError("Format non corretto")
+        raise ValueError('Format non corretto: servono ===TEXT=== e ===ANALYSIS===')
 
-    text_lines = text_match.group(1).strip().split('\n')
+    text_lines = text_match.group(1).strip().splitlines()
+    if not text_lines:
+        raise ValueError('Sezione TEXT vuota')
+
     period_id = text_lines[0].strip().replace('.', '_')
     full_text = '\n'.join(text_lines[1:]).strip()
-    full_text = re.sub(r'^[IVXLC]+\.\s*', '', full_text)
+    full_text = re.sub(r'^[IVXLCDM]+\.\s*', '', full_text)
 
-    analysis_lines = [l.strip() for l in analysis_match.group(1).strip().split('\n') if l.strip()]
+    analysis_lines = [
+        l.strip() for l in analysis_match.group(1).strip().splitlines()
+        if l.strip() and not l.lstrip().startswith('#')
+    ]
     return period_id, full_text, analysis_lines
+
+
+def parse_label(label):
+    """Restituisce type/family/subtype/coord_type dal primo campo descrittivo."""
+    label = _norm(label)
+
+    if label == 'principale' or label.startswith('principale '):
+        return 'principale', None, None, None
+
+    if label == 'coordinata' or label.startswith('coordinata '):
+        tail = label[len('coordinata'):].strip()
+        coord_type = tail or None
+        return 'coordinata', None, None, coord_type
+
+    if label == 'subordinata' or label.startswith('subordinata '):
+        tail = label[len('subordinata'):].strip()
+        family, subtype = infer_subordinate_family_and_subtype(tail)
+        return 'subordinata', family, subtype, None
+
+    # Retrocompatibilità: se manca la parola "subordinata", proviamo a
+    # interpretare il label come sottotipo noto.
+    if label in SUBTYPE_ALIASES:
+        family, subtype = SUBTYPE_ALIASES[label]
+        return 'subordinata', family, subtype, None
+
+    raise ValueError(f"Categoria non riconoscibile: '{label}'")
 
 
 def parse_analysis_line(line):
@@ -86,58 +238,51 @@ def parse_analysis_line(line):
     parent_match = re.search(r'\[([^\]]+)\]', rest)
     parent_info = parent_match.group(1).strip() if parent_match else None
 
-    rest_no_brackets = re.sub(r'\[([^\]]+)\]', '', rest)
-    disamb_match = re.search(r'\((\d+)\)', rest_no_brackets)
-    disambiguator = int(disamb_match.group(1)) if disamb_match else None
+    phenomena = []
+    for block in re.findall(r'\{([^{}]+)\}', rest):
+        phenomena.extend([_norm(x) for x in block.split(';') if _norm(x)])
 
-    rest_clean = re.sub(r'\[([^\]]+)\]', '', rest)
-    rest_clean = re.sub(r'\(\d+\)', '', rest_clean)
-    rest_clean = rest_clean.strip().rstrip(', ')
+    without_parent = re.sub(r'\[[^\]]+\]', '', rest)
+    without_phenomena = re.sub(r'\{[^{}]+\}', '', without_parent)
+
+    disamb_match = re.search(r'\((\d+)\)', without_phenomena)
+    disambiguator = int(disamb_match.group(1)) if disamb_match else None
+    rest_clean = re.sub(r'\(\d+\)', '', without_phenomena).strip().rstrip(', ')
 
     parts = [p.strip() for p in rest_clean.split(',') if p.strip()]
+    if not parts:
+        raise ValueError(f"Manca la categoria sintattica: {line}")
 
-    first_part = parts[0].lower() if parts else 'principale'
-    first_words = first_part.split()
-    prop_type = first_words[0]
-    first_part_rest = ' '.join(first_words[1:])
+    prop_type, family, subtype, coord_type = parse_label(parts[0])
 
-    subtype = None
-    level = None
+    level = '0' if prop_type == 'principale' else None
     mode = None
+    verbal_form = None
 
-    remaining_parts = parts[1:]
-
-    if prop_type == 'principale':
-        level = '0'
-        for p in remaining_parts:
-            ps = p.strip()
-            if _is_mode(ps):
-                mode = MODE_MAP[ps.lower()]
-
-    elif prop_type == 'subordinata':
-        subtype = first_part_rest if first_part_rest else None
-        for p in remaining_parts:
-            ps = p.strip()
-            if _is_mode(ps):
-                mode = MODE_MAP[ps.lower()]
-            elif _is_roman(ps):
-                level = ps
-
-    elif prop_type == 'coordinata':
-        for p in remaining_parts:
-            ps = p.strip()
-            if _is_mode(ps):
-                mode = MODE_MAP[ps.lower()]
+    for p in parts[1:]:
+        ps = p.strip()
+        if _is_mode(ps):
+            mode = MODE_MAP[ps]
+        elif _is_roman(ps):
+            level = ps
+        else:
+            vf = _parse_verbal_form(ps)
+            if vf:
+                verbal_form = vf
 
     return {
         'text': text,
         'type': prop_type,
+        'family': family,
         'subtype': subtype,
+        'coord_type': coord_type,
         'level': level,
         'mode': mode,
+        'verbal_form': verbal_form,
+        'phenomena': phenomena,
         'parent': parent_info,
         'disambiguator': disambiguator,
-        'segments': []
+        'segments': [],
     }
 
 
@@ -145,59 +290,79 @@ def parse_analysis_line(line):
 # 2. TROVA PADRE
 # ══════════════════════════════════════════════════════════════
 
-def find_parent_index(parent_desc, entries):
+def parse_parent_descriptor(parent_desc):
     if not parent_desc:
         return None
 
     tokens = [t.strip() for t in parent_desc.split(',') if t.strip()]
+    if not tokens:
+        return None
+
+    label = tokens[0]
+    target_type, target_family, target_subtype, target_coord_type = parse_label(label)
 
     target_disamb = None
     target_level = None
-    type_tokens = []
+    target_mode = None
 
     for t in tokens:
         d = re.search(r'\((\d+)\)', t)
         if d:
             target_disamb = int(d.group(1))
         clean = re.sub(r'\(\d+\)', '', t).strip()
-        if not clean:
-            continue
         if _is_mode(clean):
-            continue
-        if _is_roman(clean):
+            target_mode = MODE_MAP[clean]
+        elif _is_roman(clean):
             target_level = clean
-        else:
-            type_tokens.append(clean.lower())
 
-    wanted = ' '.join(type_tokens).strip()
-    wanted_words = wanted.split()
-    wanted_type = wanted_words[0] if wanted_words else ''
-    wanted_sub = ' '.join(wanted_words[1:]) if len(wanted_words) > 1 else ''
+    return {
+        'type': target_type,
+        'family': target_family,
+        'subtype': target_subtype,
+        'coord_type': target_coord_type,
+        'level': target_level,
+        'mode': target_mode,
+        'disambiguator': target_disamb,
+    }
 
-    matches = []
-    for j, e in enumerate(entries):
-        et = e['type'].lower()
-        es = (e['subtype'] or '').lower()
-        el = e['level']
 
-        hit = False
-        if wanted_type == 'principale' and et == 'principale':
-            hit = True
-        elif wanted_type == 'subordinata' and et == 'subordinata':
-            if wanted_sub == es or not wanted_sub:
-                hit = True
-        elif wanted == et or wanted == (et + ' ' + es).strip():
-            hit = True
+def _entry_matches_descriptor(entry, desc):
+    if entry['type'] != desc['type']:
+        return False
 
-        if hit:
-            if target_level and el and el != target_level:
-                continue
-            matches.append(j)
+    if desc['type'] == 'subordinata':
+        if desc['family'] and entry.get('family') != desc['family']:
+            return False
+        if desc['subtype'] and entry.get('subtype') != desc['subtype']:
+            return False
+
+    if desc['type'] == 'coordinata':
+        if desc['coord_type'] and entry.get('coord_type') != desc['coord_type']:
+            return False
+
+    if desc['level'] and entry.get('level') and entry['level'] != desc['level']:
+        return False
+
+    if desc['mode'] and entry.get('mode') and entry['mode'] != desc['mode']:
+        return False
+
+    return True
+
+
+def find_parent_index(parent_desc, entries):
+    if not parent_desc:
+        return None
+
+    desc = parse_parent_descriptor(parent_desc)
+    matches = [i for i, e in enumerate(entries) if _entry_matches_descriptor(e, desc)]
 
     if not matches:
         return None
-    if target_disamb and target_disamb <= len(matches):
-        return matches[target_disamb - 1]
+
+    d = desc['disambiguator']
+    if d:
+        return matches[d - 1] if d <= len(matches) else None
+
     return matches[0]
 
 
@@ -208,10 +373,19 @@ def find_parent_index(parent_desc, entries):
 def build_segments(full_text, entries):
     pieces = []
 
+    # Conserviamo il comportamento precedente: la principale può essere
+    # discontinua e viene quindi spezzata sulle virgole dichiarate nell'input.
     for ei, entry in enumerate(entries):
         raw = entry['text'].strip()
 
-        if entry['type'].lower() == 'principale':
+        # Il carattere | può essere usato nell'ANALYSIS per dichiarare
+        # esplicitamente una proposizione discontinua, a qualunque livello:
+        #   che, | quella republica, | convenire andare sciancata = ...
+        # Se | non è presente, resta compatibile il vecchio comportamento per
+        # la principale, che viene spezzata sulle virgole indicate.
+        if '|' in raw:
+            chunks = [c.strip() for c in raw.split('|') if c.strip()]
+        elif entry['type'] == 'principale':
             chunks = [c.strip() for c in raw.split(',') if c.strip()]
         else:
             chunks = [raw]
@@ -221,31 +395,41 @@ def build_segments(full_text, entries):
             if not search:
                 continue
 
-            pos = full_text.lower().find(search.lower())
-            if pos == -1:
-                continue
+            # Tutte le occorrenze: scegliamo poi quella non ancora occupata.
+            starts = [m.start() for m in re.finditer(re.escape(search), full_text, re.IGNORECASE)]
+            for pos in starts:
+                end = pos + len(search)
 
-            end = pos + len(search)
-
-            if entry['type'].lower() == 'principale':
-                while end < len(full_text) and full_text[end] in '.,;:!?':
-                    end += 1
-            else:
-                trailing_in_chunk = chunk[len(search):]
-                for ch in trailing_in_chunk:
-                    if end < len(full_text) and full_text[end] == ch:
+                if entry['type'] == 'principale':
+                    while end < len(full_text) and full_text[end] in '.,;:!?':
                         end += 1
+                else:
+                    trailing = chunk[len(search):]
+                    for ch in trailing:
+                        if end < len(full_text) and full_text[end] == ch:
+                            end += 1
 
-            pieces.append((pos, end, ei))
+                pieces.append((pos, end, ei, chunk))
 
-    pieces.sort(key=lambda x: x[0])
-
+    # Sceglie una sola occorrenza per ogni chunk, privilegiando l'ordine testuale
+    # e impedendo sovrapposizioni. Questo evita che testi ripetuti puntino sempre
+    # alla prima occorrenza del periodo.
+    pieces.sort(key=lambda x: (x[0], x[1]))
+    used_entry_chunks = set()
     filtered = []
-    last_end = -1
-    for s, e, ei in pieces:
-        if s >= last_end:
-            filtered.append((s, e, ei))
-            last_end = e
+    occupied = []
+
+    for s, e, ei, chunk in pieces:
+        key = (ei, chunk.lower())
+        if key in used_entry_chunks:
+            continue
+        if any(not (e <= os or s >= oe) for os, oe in occupied):
+            continue
+        filtered.append((s, e, ei))
+        occupied.append((s, e))
+        used_entry_chunks.add(key)
+
+    filtered.sort(key=lambda x: x[0])
 
     segments = []
     for s, e, ei in filtered:
@@ -260,83 +444,95 @@ def build_segments(full_text, entries):
 # 4. GROUP IDS
 # ══════════════════════════════════════════════════════════════
 
+def _unique_id(base, used):
+    if base not in used:
+        return base
+    n = 2
+    while f'{base}_{n}' in used:
+        n += 1
+    return f'{base}_{n}'
+
+
 def build_group_ids(period_id, entries):
     ids = {}
+    used = set()
 
     for idx, entry in enumerate(entries):
-        t = entry['type'].lower()
+        t = entry['type']
 
         if t == 'principale':
-            gid = f"{period_id}_g_main"
+            base = f'{period_id}_g_main'
 
         elif t == 'subordinata':
-            abbr = abbreviate(entry['subtype'])
+            abbr = subordinate_abbr(entry.get('family'), entry.get('subtype'))
             lev = entry['level'] or 'I'
-            gid = f"{period_id}_g_{abbr}_{lev}"
-
-            if gid in ids.values():
-                d = entry.get('disambiguator')
-                if d:
-                    roman = _to_roman(d)
-                    gid = f"{period_id}_g_{abbr}_{roman}"
-                else:
-                    n = 2
-                    while f"{gid}_{n}" in ids.values():
-                        n += 1
-                    gid = f"{gid}_{n}"
-                if gid in ids.values():
-                    n = 2
-                    while f"{gid}_{n}" in ids.values():
-                        n += 1
-                    gid = f"{gid}_{n}"
+            base = f'{period_id}_g_{abbr}_{lev}'
 
         elif t == 'coordinata':
+            c_abbr = coordinate_abbr(entry.get('coord_type'))
             pi = find_parent_index(entry['parent'], entries)
             if pi is not None:
                 parent = entries[pi]
-                pt = parent['type'].lower()
-                if pt == 'principale':
-                    gid = f"{period_id}_g_coord_main"
-                elif pt == 'subordinata':
-                    p_abbr = abbreviate(parent['subtype'])
+                if parent['type'] == 'principale':
+                    base = f'{period_id}_g_{c_abbr}_main'
+                elif parent['type'] == 'subordinata':
+                    p_abbr = subordinate_abbr(parent.get('family'), parent.get('subtype'))
                     p_lev = parent['level'] or 'I'
-                    gid = f"{period_id}_g_{p_abbr}_{p_lev}_coord"
+                    base = f'{period_id}_g_{c_abbr}_{p_abbr}_{p_lev}'
                 else:
-                    gid = f"{period_id}_g_coord_{idx}"
+                    base = f'{period_id}_g_{c_abbr}_{idx + 1}'
             else:
-                gid = f"{period_id}_g_coord_{idx}"
-
-            if gid in ids.values():
-                n = 2
-                while f"{gid}_{n}" in ids.values():
-                    n += 1
-                gid = f"{gid}_{n}"
-
+                base = f'{period_id}_g_{c_abbr}_{idx + 1}'
         else:
-            gid = f"{period_id}_g_{idx}"
+            base = f'{period_id}_g_{idx + 1}'
 
+        gid = _unique_id(base, used)
+        used.add(gid)
         ids[idx] = gid
 
     return ids
 
 
 # ══════════════════════════════════════════════════════════════
-# 5. ATTRIBUTO TYPE
+# 5. ETICHETTE E ATTRIBUTI XML
 # ══════════════════════════════════════════════════════════════
 
+def canonical_subordinate_label(entry):
+    family = entry.get('family')
+    subtype = entry.get('subtype')
+
+    if family == 'completiva' and subtype:
+        return f'subordinata completiva {subtype}'
+    if family == 'relativa':
+        return 'subordinata relativa'
+    if family == 'circostanziale' and subtype:
+        # Mantiene il lessico già usato dal front-end: "subordinata causale",
+        # "subordinata comparativa" ecc. La famiglia resta nell'attributo family.
+        return f'subordinata {subtype}'
+    if subtype:
+        return f'subordinata {subtype}'
+    return 'subordinata'
+
+
 def build_type_attr(entry, entries):
-    t = entry['type'].lower()
+    t = entry['type']
     if t == 'principale':
         return 'principale'
     if t == 'subordinata':
-        return ('subordinata ' + (entry['subtype'] or '')).strip()
+        return canonical_subordinate_label(entry)
     if t == 'coordinata':
         pi = find_parent_index(entry['parent'], entries)
         if pi is not None:
             parent_type = build_type_attr(entries[pi], entries)
-            return f"coordinata alla {parent_type}"
+            return f'coordinata alla {parent_type}'
         return 'coordinata'
     return t
+
+
+def xml_attr(name, value):
+    if value is None or value == '':
+        return ''
+    return f' {name}="{escape(str(value), quote=True)}"'
 
 
 # ══════════════════════════════════════════════════════════════
@@ -345,12 +541,12 @@ def build_type_attr(entry, entries):
 
 def generate_xml(period_id, segments, entries):
     out = []
-    out.append(f'  <period id="{period_id}" type="periodo">')
-    out.append(f'    <prop id="{period_id}_p_all" type="full">')
+    out.append(f'  <period id="{escape(period_id, quote=True)}" type="periodo">')
+    out.append(f'    <prop id="{escape(period_id, quote=True)}_p_all" type="full">')
 
     for i, seg in enumerate(segments, 1):
         s = seg if seg.startswith(' ') else ' ' + seg
-        out.append(f'      <seg id="{period_id}_seg{i}">{s}</seg>')
+        out.append(f'      <seg id="{escape(period_id, quote=True)}_seg{i}">{escape(s)}</seg>')
 
     out.append('    </prop>')
     out.append('')
@@ -362,11 +558,10 @@ def generate_xml(period_id, segments, entries):
         xtype = build_type_attr(entry, entries)
 
         level = entry['level']
-        if entry['type'].lower() == 'coordinata':
+        pi = None
+        if entry['type'] == 'coordinata':
             pi = find_parent_index(entry['parent'], entries)
-            level = entries[pi]['level'] if pi is not None else None
-
-        mode = entry.get('mode')
+            level = entries[pi]['level'] if pi is not None else level
 
         parent_gid = None
         if entry['parent']:
@@ -374,20 +569,29 @@ def generate_xml(period_id, segments, entries):
             if pi is not None:
                 parent_gid = gids[pi]
 
-        attrs = f'id="{gid}" type="{xtype}"'
-        if level is not None:
-            attrs += f' level="{level}"'
-        if mode:
-            attrs += f' mode="{mode}"'
-        if parent_gid:
-            attrs += f' parent="{parent_gid}"'
+        attrs = ''
+        attrs += xml_attr('id', gid)
+        attrs += xml_attr('type', xtype)
+        attrs += xml_attr('relation', entry['type'])
+        attrs += xml_attr('family', entry.get('family'))
+        attrs += xml_attr('subtype', entry.get('subtype'))
+        attrs += xml_attr('coordType', entry.get('coord_type'))
+        attrs += xml_attr('level', level)
+        attrs += xml_attr('mode', entry.get('mode'))
+        attrs += xml_attr('verbalForm', entry.get('verbal_form'))
+        attrs += xml_attr('phenomena', '; '.join(entry.get('phenomena') or []))
+        attrs += xml_attr('parent', parent_gid)
 
-        out.append(f'    <group {attrs}>')
+        out.append(f'    <group{attrs}>')
 
+        emitted = set()
         for seg_text in entry['segments']:
             for si, seg in enumerate(segments):
+                if si in emitted:
+                    continue
                 if seg.lower().strip() == seg_text.lower().strip():
-                    out.append(f'      <member ref="{period_id}_seg{si + 1}"/>')
+                    out.append(f'      <member ref="{escape(period_id, quote=True)}_seg{si + 1}"/>')
+                    emitted.add(si)
                     break
 
         out.append('    </group>')
@@ -401,7 +605,23 @@ def generate_xml(period_id, segments, entries):
 # MAIN
 # ══════════════════════════════════════════════════════════════
 
+
+def print_categories():
+    print('SUBORDINATE:')
+    for family, subtypes in SUBORDINATE_FAMILIES.items():
+        print(f'  {family}:')
+        for subtype in subtypes:
+            print(f'    - {subtype}')
+    print('COORDINATE:')
+    for coord_type in COORDINATE_TYPES:
+        print(f'  - {coord_type}')
+    print('\nNota: i nuovi sottotipi espliciti vengono accettati anche se non registrati.')
+
 if __name__ == '__main__':
+    if '--categories' in sys.argv:
+        print_categories()
+        sys.exit(0)
+
     filename = sys.argv[1] if len(sys.argv) > 1 else 'input.txt'
 
     try:
@@ -409,10 +629,14 @@ if __name__ == '__main__':
             input_text = f.read()
     except FileNotFoundError:
         print(f"ERRORE: file '{filename}' non trovato.")
-        print(f"Uso: python generate_xml.py [nome_file]")
+        print('Uso: python generate_xml.py [nome_file]')
         sys.exit(1)
 
-    period_id, full_text, analysis_lines = parse_input(input_text)
-    entries = [parse_analysis_line(line) for line in analysis_lines]
-    segments = build_segments(full_text, entries)
-    print(generate_xml(period_id, segments, entries))
+    try:
+        period_id, full_text, analysis_lines = parse_input(input_text)
+        entries = [parse_analysis_line(line) for line in analysis_lines]
+        segments = build_segments(full_text, entries)
+        print(generate_xml(period_id, segments, entries))
+    except ValueError as exc:
+        print(f'ERRORE DI PARSING: {exc}', file=sys.stderr)
+        sys.exit(2)
